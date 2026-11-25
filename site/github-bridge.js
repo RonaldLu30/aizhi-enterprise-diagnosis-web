@@ -34,7 +34,7 @@
     authorization = new Promise((resolve, reject) => {
       const panel = document.createElement('dialog');
       panel.style.cssText = 'max-width:460px;width:90%;padding:24px;border:1px solid #46575A;border-radius:8px;line-height:1.8;color:#1C2A2D;background:#F7F8F4';
-      panel.innerHTML = '<form><h2 style="margin-top:0">连接 GitHub 验收环境</h2><p>使用有本仓库权限的 GitHub 账号创建细粒度访问令牌，仅授权本仓库：Actions 读写、Contents 读写。令牌仅保留在当前页面，刷新后需重新输入。</p><label>仓库访问令牌<input type="password" required autocomplete="off" style="display:block;width:100%;padding:10px;margin:8px 0 16px"></label><p role="status"></p><button type="button" data-cancel>取消</button> <button type="submit">连接并继续</button></form>';
+      panel.innerHTML = '<form><h2 style="margin-top:0">连接 GitHub 验收环境</h2><p>需要原私有仓库的写入权限。仓库所有者可创建细粒度令牌，仅授权该仓库的 Actions 读写、Contents 读写；外部协作者若无法选择该仓库，可使用拥有 repo 权限的 classic 令牌（权限范围更大，验收后请撤销）。</p><p>令牌仅保留在当前页面，刷新后需重新输入。这里填写 GitHub 访问令牌，不是模型密钥。</p><label>仓库访问令牌<input type="password" required autocomplete="off" style="display:block;width:100%;padding:10px;margin:8px 0 16px"></label><p role="status"></p><button type="button" data-cancel>取消</button> <button type="submit">连接并继续</button></form>';
       document.body.append(panel);
       const close = () => { panel.close(); panel.remove(); };
       const cancel = () => { close(); reject(new Error('尚未连接 GitHub，作答已保留。')); };
