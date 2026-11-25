@@ -1,0 +1,2024 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#D9E1DB">
+<meta name="description" content="12 道基础题 + 3 轮定制追问，整理成企业画像和 AI 问题诊断书。">
+<title>企业 AI 测评 · 爱智企业诊断</title>
+<style>
+/* 爱智企业AI检测 · 通关文牒主题（v5.13）
+   青瓷灰底 + 纸白 + 墨色；朱砂印只用在「印章」和「往前走」的主按钮上，其余保持克制。 */
+:root{color-scheme:light;
+  --bg:#D9E1DB;--paper:#F7F8F4;--paper2:#EEF2EE;--white:#FFFFFF;
+  --ink:#1C2A2D;--ink2:#46575A;--ink3:#7A8A89;--line:#C5D0C9;--dash:#A3B1AC;
+  --seal:#C0302A;--seal-d:#96231E;--gold:#9C7A2E;--sel:#2C5A5E;--sel-bg:#E6EFED;
+  --serif:"Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif;
+  --sans:"PingFang SC","HarmonyOS Sans SC","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",system-ui,sans-serif}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:15px/1.7 var(--sans);-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--sel);outline-offset:2px}
+.shell{max-width:560px;margin:0 auto;padding:20px 16px 56px}
+.screen{display:block}
+/* 黑屏铁律：卡片永远可见（不做滚动渐显） */
+.rcard{opacity:1 !important;transform:none !important}
+.rcard{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:18px 16px;margin:0 0 12px}
+.rcard.rhead{background:transparent;border:0;padding:2px 2px 8px;margin-bottom:6px}
+
+/* —— 印章（全站唯一的大胆元素）—— */
+.seal{display:inline-flex;align-items:center;justify-content:center;flex:none;width:48px;height:48px;border-radius:5px;
+  font:700 13.5px/1.15 var(--serif);letter-spacing:.06em;text-align:center;color:var(--ink3);border:1.5px dashed var(--dash);background:transparent}
+.seal.on{background:var(--seal);color:#FFF3EE;border:0;transform:rotate(var(--rot,-5deg));
+  box-shadow:inset 0 0 0 2px var(--seal),inset 0 0 0 3.5px rgba(255,238,232,.82)}
+.seal.big{width:84px;height:84px;font-size:17px;border-radius:7px}
+@keyframes stamp{0%{transform:scale(1.9) rotate(-16deg);opacity:0}55%{opacity:1}72%{transform:scale(.93) rotate(var(--rot,-5deg))}100%{transform:scale(1) rotate(var(--rot,-5deg));opacity:1}}
+.stamp-in{animation:stamp .44s cubic-bezier(.2,.7,.3,1.25) both}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.stamp-in{animation:none}*{transition:none !important}.spinner{animation-duration:2.4s !important}}
+
+/* —— 欢迎页 —— */
+.brandbar{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink2);letter-spacing:.04em}
+.brandbar .mark{width:24px;height:24px;border-radius:3px;background:var(--seal);color:#FFF3EE;font:700 14px/24px var(--serif);text-align:center}
+.h-display{font:800 38px/1.22 var(--serif);margin:30px 0 14px;letter-spacing:.01em}
+.lede{font-size:15.5px;color:var(--ink2);margin:0 0 24px;max-width:30em}
+.passport{position:relative;background:var(--paper);border:1.5px solid var(--ink);border-radius:2px;padding:20px 18px 18px}
+.passport::before{content:"";position:absolute;inset:5px;border:1px solid rgba(28,42,45,.3);pointer-events:none}
+.pp-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;position:relative}
+.pp-head b{font:800 21px/1.2 var(--serif);letter-spacing:.18em}
+.pp-head span{font-size:12.5px;color:var(--ink3)}
+.pp-seals{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:18px 0 0;padding:0;list-style:none;position:relative}
+.pp-seals li{display:flex;flex-direction:column;align-items:center;gap:7px}
+.pp-seals li em{font-style:normal;font-size:12px;color:var(--ink3)}
+.pp-seals li:nth-child(2) .seal{--rot:4deg}.pp-seals li:nth-child(3) .seal{--rot:-8deg}.pp-seals li:nth-child(4) .seal{--rot:3deg}.pp-seals li:nth-child(5) .seal{--rot:-3deg}
+.pp-rank{display:flex;align-items:center;gap:16px;margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);position:relative}
+.pp-rank p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.6}
+.pp-rank p b{display:block;font:700 16px/1.4 var(--serif);color:var(--ink);margin-bottom:2px}
+.bigbtn{display:block;width:100%;border:0;border-radius:6px;background:var(--seal);color:#FFF6F2;font:700 17px/1 var(--sans);letter-spacing:.14em;
+  padding:17px 12px;margin:22px 0 0;box-shadow:0 3px 0 var(--seal-d);transition:transform .08s,box-shadow .08s}
+.bigbtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--seal-d)}
+.bigbtn:disabled{opacity:.6;cursor:default}
+.resume{font-size:13.5px;color:var(--ink2);text-align:center;margin:14px 0 0}
+.resume b[onclick]{color:var(--seal);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-left:6px}
+.peerline{font-size:13px;color:var(--ink2);text-align:center;margin:12px 0 0}
+.peerline b{font:700 15px var(--serif);color:var(--ink)}
+.rules{margin:28px 0 0;border-top:1px solid var(--line);padding-top:16px}
+.rules p{margin:0 0 12px;font-size:13.5px;color:var(--ink2);line-height:1.75}
+.rules p b{color:var(--ink);font-weight:700;margin-right:6px}
+
+/* —— 登记页 / 难题页 —— */
+.stepline{display:flex;gap:6px;margin:0 0 14px}
+.stepline span{font-size:12px;color:var(--ink3);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.stepline span.on{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+.stepline span.ok{color:var(--sel);border-color:var(--sel)}
+.pg-t{font:800 28px/1.25 var(--serif);margin:0 0 6px}
+.ld{font-size:14px;color:var(--ink2);margin:0}
+.qblock{margin-top:22px}
+.qblock:first-child{margin-top:4px}
+.qblabel{font-size:15px;font-weight:700;margin-bottom:10px;line-height:1.5;display:flex;align-items:center}
+.qblabel b{display:inline-flex;align-items:center;justify-content:center;flex:none;width:22px;height:22px;border-radius:4px;background:var(--ink);color:var(--paper);font-size:12.5px;margin-right:9px}
+.qbsub{font-size:12.5px;color:var(--ink2);margin:0 0 7px}
+.optwrap{display:flex;flex-wrap:wrap;gap:8px}
+.opt-pill{border:1px solid var(--line);background:var(--white);color:var(--ink);font-size:13.5px;border-radius:999px;padding:9px 14px;line-height:1.3;transition:background .12s,border-color .12s}
+.opt-pill:active{transform:scale(.97)}
+.opt-pill.on{background:var(--sel);border-color:var(--sel);color:#fff;font-weight:600}
+.inputx{display:block;width:100%;background:var(--white);border:1px solid var(--line);border-radius:6px;padding:12px 13px;font-size:15px;line-height:1.4;color:var(--ink);margin:0 0 10px;outline:none;-webkit-appearance:none;appearance:none}
+.inputx::placeholder{color:#97A4A2}
+.inputx:focus{border-color:var(--sel);box-shadow:0 0 0 3px rgba(44,90,94,.14)}
+select.inputx{padding-right:34px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2346575A' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center}
+textarea.inputx{resize:vertical;min-height:62px}
+.hintrow{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 8px}
+.hintrow:empty{display:none}
+.hintchip{border:1px dashed #A9B6B3;background:transparent;color:var(--ink2);font-size:12.5px;line-height:1.35;border-radius:6px;padding:6px 9px;text-align:left}
+.hintchip:active{background:var(--white)}
+.bh{font:700 16px/1.4 var(--serif);margin:20px 0 10px}
+.bh:first-child{margin-top:0}
+.bh small{font:400 12.5px var(--sans);color:var(--ink3);margin-left:6px}
+.ferr{color:var(--seal);font-size:13px;display:none;margin:4px 0 0}
+.foot-note{font-size:12px;color:var(--ink3);text-align:center;margin:16px 0 0;line-height:1.6}
+
+/* —— 闯关作答 —— */
+.stagebar{position:sticky;top:0;z-index:5;background:var(--bg);margin:-20px -16px 12px;padding:14px 16px 10px;border-bottom:1px solid var(--line)}
+.sb-top{display:flex;align-items:center;gap:10px}
+.sb-name{font:800 19px/1.2 var(--serif);letter-spacing:.04em}
+.sb-name small{font:500 13px var(--sans);color:var(--ink2);margin-left:8px;letter-spacing:0}
+.prog-num{margin-left:auto;font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.prog-num b{color:var(--ink);font-size:16px}
+.rail-toggle{border:1px solid var(--line);background:var(--paper);border-radius:6px;font-size:12.5px;padding:5px 9px;color:var(--ink2);white-space:nowrap}
+.rail-toggle .n{margin-left:4px;color:var(--ink);font-variant-numeric:tabular-nums}
+.route{position:relative;display:flex;justify-content:space-between;margin:14px 0 2px}
+.route .track{position:absolute;left:22px;right:22px;top:14px;height:2px;background:var(--line)}
+.route .track i{display:block;height:100%;width:0;background:var(--ink);transition:width .3s}
+.rnode{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:5px;width:44px}
+.rnode .seal{width:30px;height:30px;font-size:12.5px;background:var(--bg)}
+.rnode .seal.on{background:var(--seal)}
+.rnode em{font-style:normal;font-size:11.5px;color:var(--ink3)}
+.rnode.cur .seal{border:1.5px solid var(--ink);color:var(--ink);background:var(--paper)}
+.rnode.cur em{color:var(--ink);font-weight:700}
+.sb-desc{font-size:12.5px;color:var(--ink2);margin:8px 0 0}
+.qcard{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:20px 16px 16px;min-height:320px}
+.dim-tag{display:inline-block;font-size:12.5px;color:var(--ink2);border-bottom:1.5px solid var(--seal);padding-bottom:1px;margin-bottom:12px}
+.dim-tag:empty{display:none}
+.qtext{font:600 19px/1.6 var(--serif);margin:0 0 18px;overflow-wrap:anywhere}
+.ratelist{display:flex;flex-direction:column;gap:9px}
+.rate-row{display:flex;align-items:flex-start;gap:12px;padding:12px 13px;border:1px solid var(--line);border-radius:7px;background:var(--white);transition:border-color .12s,background .12s;outline:none}
+.rate-row:focus-visible{border-color:var(--sel);box-shadow:0 0 0 3px rgba(44,90,94,.18)}
+.rr-badge{flex:none;width:24px;height:24px;border-radius:4px;border:1px solid var(--dash);font:700 13px/22px var(--sans);text-align:center;color:var(--ink2);margin-top:1px}
+.rr-mean{font-size:15px;line-height:1.55;flex:1}
+.rate-row.sel{border-color:var(--sel);background:var(--sel-bg);box-shadow:inset 0 0 0 1px var(--sel)}
+.rate-row.sel .rr-badge{background:var(--sel);border-color:var(--sel);color:#fff}
+.quiz-foot{display:flex;align-items:center;gap:10px;margin-top:14px}
+.back{border:0;background:none;color:var(--ink2);font-size:14.5px;padding:10px 4px}
+.back:disabled{opacity:.35;cursor:default}
+.hint{flex:1;text-align:center;font-size:12px;color:var(--ink3);line-height:1.5}
+.nextbtn{border:0;border-radius:6px;background:var(--ink);color:var(--paper);font-size:14.5px;font-weight:600;padding:11px 20px}
+.nextbtn:disabled{background:#B7C2BD;color:#EEF2EE;cursor:default}
+/* 出题等待 */
+.waitbox{font:14px/1.7 var(--sans);text-align:center;padding:18px 4px}
+.waitbox .wt{font:700 17px/1.6 var(--serif);margin:0}
+.waitbox .ws{font-size:13px;color:var(--ink2);margin:4px 0 0}
+.waitbox .we{color:var(--seal);font-size:14.5px;margin:0}
+.spinner{width:30px;height:30px;border:3px solid #D5DED9;border-top-color:var(--seal);border-radius:50%;animation:spin .9s linear infinite;margin:0 auto}
+.gchips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0 4px}
+.gchips span{font-size:12px;color:var(--ink2);background:var(--white);border:1px solid var(--line);border-radius:999px;padding:2px 10px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gsteps{max-width:280px;margin:16px auto 6px;text-align:left}
+.gstep{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink3);padding:6px 0}
+.gstep i{flex:none;width:22px;height:22px;border-radius:4px;border:1px solid var(--dash);display:flex;align-items:center;justify-content:center;font-style:normal;font-size:12px}
+.gstep.done{color:var(--sel)}.gstep.done i{background:var(--sel);border-color:var(--sel);color:#fff}
+.gstep.on{color:var(--ink);font-weight:700}.gstep.on i{border-color:var(--seal);color:var(--seal)}
+.mini{border:1px solid var(--ink);background:var(--paper);color:var(--ink);font-size:13.5px;border-radius:6px;padding:8px 18px}
+.rk{font-size:12px;color:var(--ink3);margin-top:4px;line-height:1.6}
+/* 答题格 */
+.side-mask{display:none;position:fixed;inset:0;background:rgba(28,42,45,.38);z-index:40}
+.sidepanel{position:fixed;right:0;top:0;bottom:0;width:min(330px,88vw);background:var(--paper);z-index:41;flex-direction:column;padding:18px 16px 16px;box-shadow:-8px 0 24px rgba(28,42,45,.2)}
+.sp-head{display:flex;justify-content:space-between;align-items:center}
+.sp-title{font:700 17px var(--serif)}
+.sp-title i{font-style:normal;color:var(--ink3);font-size:14px}
+.sp-close{border:0;background:none;font-size:18px;color:var(--ink2);padding:4px 8px}
+.sidegrid{flex:1;overflow:auto;margin:6px 0 12px}
+.sgrp{font-size:12.5px;color:var(--ink2);margin:14px 0 7px;font-weight:600}
+.scells{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.scell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:5px;font-size:13px;border:1px solid var(--line);background:var(--white);cursor:pointer;font-variant-numeric:tabular-nums}
+.scell.done{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.scell.cur{box-shadow:0 0 0 2px var(--seal)}
+.scell.locked{opacity:.4;cursor:not-allowed}
+.sp-finish{border:0;border-radius:6px;background:var(--seal);color:#fff;font-size:15px;font-weight:700;padding:13px}
+.sp-finish:disabled{background:#C9D1CD;color:#F2F4F2;cursor:default}
+/* 过关 */
+#stageClear{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(28,42,45,.58);padding:24px}
+#stageClear.on{display:flex}
+.sc-card{background:var(--paper);border-radius:10px;width:min(360px,100%);padding:30px 22px 22px;text-align:center}
+.sc-card .seal.big{width:104px;height:104px;font-size:22px;line-height:1.2}
+.sc-t{font:800 25px/1.3 var(--serif);margin:20px 0 6px}
+.sc-p{font-size:14px;color:var(--ink2);margin:0}
+.sc-next{font-size:13.5px;color:var(--ink);margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line)}
+.sc-next b{font-family:var(--serif)}
+.sc-mini{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.sc-mini .seal{width:26px;height:26px;font-size:11px;border-radius:3px}
+.sc-card .bigbtn{margin-top:18px}
+
+/* —— 结算与报告 —— */
+.rank .rk-seals{display:flex;justify-content:space-between;margin:16px 4px 0;position:relative}
+.rank .rk-seals .seal{width:42px;height:42px;font-size:12px}
+.rank .rk-seals .seal:nth-child(2){--rot:4deg}.rank .rk-seals .seal:nth-child(3){--rot:-8deg}.rank .rk-seals .seal:nth-child(4){--rot:3deg}.rank .rk-seals .seal:nth-child(5){--rot:-3deg}
+.rk-main{display:flex;align-items:center;gap:18px;margin-top:20px;padding-top:18px;border-top:1px dashed var(--line);position:relative}
+.rankseal{--rot:-4deg;width:116px;height:116px;flex:none;border-radius:8px;background:var(--seal);color:#FFF3EE;display:flex;align-items:center;justify-content:center;transform:rotate(var(--rot));
+  box-shadow:inset 0 0 0 3px var(--seal),inset 0 0 0 5px rgba(255,238,232,.85)}
+.rankseal .lvl{display:flex;flex-direction:column;align-items:center;margin:0}
+.rankseal .b{font:800 42px/1 var(--serif)}
+.rankseal .n{font:700 15px/1.2 var(--serif);margin-top:8px;letter-spacing:.1em}
+.rankseal.pending{background:transparent;color:var(--ink3);border:1.5px dashed var(--dash);box-shadow:none;transform:none;font:700 15px/1.5 var(--serif);text-align:center}
+.rk-side{min-width:0}
+.rk-side .t{font-size:12.5px;color:var(--ink3);margin:0}
+.rk-side .big{font:800 20px/1.35 var(--serif);margin:2px 0 6px}
+.rk-side .s{font-size:13px;color:var(--ink2);margin:0;line-height:1.65}
+.peer{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink2);position:relative}
+.peer b{font:800 24px/1 var(--serif);color:var(--seal);margin:0 2px}
+.tcard{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.tcard .cap{font-size:12.5px;color:#A9B8B5;text-align:center}
+.tcard .spinner{border-color:rgba(247,248,244,.2);border-top-color:#fff}
+.tcard .waitp{color:#C9D5D2;font-size:13px;margin-top:12px;line-height:1.8;text-align:center}
+.tletters{display:flex;gap:10px;justify-content:center;margin:14px 0 6px}
+.tletters span{width:54px;height:62px;border:1.5px solid rgba(247,248,244,.75);border-radius:6px;font:800 30px/59px var(--serif);text-align:center;color:var(--paper)}
+.tname{text-align:center;font:800 22px/1.4 var(--serif);margin:10px 0 4px;letter-spacing:.06em}
+.tone{text-align:center;font-size:14px;color:#D3DDDA;line-height:1.8;margin:6px 0 0}
+.taxes{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px}
+.taxes span{font-size:12px;color:#D3DDDA;border:1px solid rgba(247,248,244,.28);border-radius:999px;padding:2px 10px}
+.tcard .rk{color:#93A3A0;text-align:center;margin-top:10px}
+.tcard .mini{background:transparent;color:var(--paper);border-color:rgba(247,248,244,.6)}
+.share .sh-t{font:800 18px/1.4 var(--serif);margin:0}
+.share .sh-d{font-size:13px;color:var(--ink2);margin:4px 0 0}
+.sh-row{display:flex;gap:10px;margin-top:14px}
+.shbtn{flex:1;border:1px solid var(--ink);background:var(--paper);color:var(--ink);border-radius:6px;font-size:14.5px;font-weight:700;padding:12px 8px}
+.shbtn.main{background:var(--ink);color:var(--paper)}
+.shbtn:disabled{opacity:.45;cursor:default}
+#fullReport,#fullReport *{overflow-wrap:anywhere;word-break:break-word}
+.rsheet .cap{font:800 21px/1.3 var(--serif)}
+.lvl{display:flex;align-items:baseline;gap:8px}
+.rsum{font-size:15px;line-height:1.8;margin:12px 0 0;font-weight:600}
+.rsub{font-size:13px;color:var(--ink2);line-height:1.7;margin:6px 0 0}
+.rkpi{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+.rkpi span{font-size:12px;color:var(--ink2);background:var(--paper2);border-radius:4px;padding:2px 9px}
+.rnote{font-size:12px;color:var(--ink3);margin:10px 0 0;line-height:1.65}
+.rsec{font:800 17px/1.4 var(--serif);margin:0 0 12px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.tag{display:inline-block;font-size:11.5px;border-radius:3px;padding:0 7px;line-height:20px;font-weight:600}
+.tag.hi{background:#F6E1DE;color:var(--seal-d)}
+.tag.md{background:#F2E8D2;color:#73550F}
+.tag.lo{background:#E1ECE8;color:var(--sel)}
+.pbox{padding:2px 0 2px 13px;border-left:3px solid #D3A447;margin:0 0 16px}
+.pbox.hi{border-left-color:var(--seal)}.pbox.lo{border-left-color:#7FA79C}
+.pbox:last-child{margin-bottom:0}
+.pbox .pt{display:flex;align-items:flex-start;gap:8px;font-size:15px;font-weight:700;line-height:1.5}
+.pbox .pt .tag{flex:none;margin-top:1px}
+.pbox .pd{font-size:13.5px;color:var(--ink2);line-height:1.7;margin:4px 0 0}
+.pbox .pq{font-size:12px;color:var(--ink3);margin-top:4px}
+.pbox.sbox{border-left-color:var(--sel)}
+.dimbar{margin:0 0 12px}.dimbar:last-child{margin-bottom:0}
+.dimbar .dl{display:flex;justify-content:space-between;gap:8px;font-size:14px;margin-bottom:5px}
+.dimbar .dl b{font-weight:600}
+.dimbar .dl span{color:var(--ink2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.dimbar .db{height:6px;background:#E2E8E4;border-radius:3px;overflow:hidden}
+.dimbar .db i{display:block;height:100%;background:var(--ink);border-radius:3px}
+.rblock{margin-top:28px}
+.ladder{display:flex;gap:3px;margin:9px 0 6px}
+.ladder span{flex:1;height:6px;border-radius:1px;background:#DCE3DE}
+.ladder span.on{background:var(--seal)}
+.peer .rk{display:block;margin-top:4px}
+.refsrc{font-size:12px;color:var(--ink3);margin:0 0 10px;line-height:1.6}
+.refitem{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.refitem:last-child{border-bottom:none}
+.reflink{flex:none;width:26px;height:26px;border-radius:4px;background:var(--sel);color:#fff;font:700 13px/26px var(--serif);text-align:center;margin-top:2px}
+.refname{font-size:14.5px;font-weight:700;line-height:1.5}
+.refcap{font-size:13px;color:var(--sel);margin:2px 0 3px;line-height:1.6}
+.refdesc{font-size:13px;color:var(--ink2);line-height:1.7}
+.reffor{font-size:12px;color:var(--ink3);margin-top:4px}
+.ddcard{border:1.5px solid var(--ink)}
+.dditem{display:flex;gap:10px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.dditem:last-of-type{border-bottom:none}
+.dditem b{flex:none;width:22px;height:22px;border-radius:4px;background:var(--ink);color:var(--paper);font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.dditem .dt{font-size:15px;font-weight:700;line-height:1.55}
+.dditem .dw{font-size:13px;color:var(--ink2);line-height:1.65;margin-top:2px}
+.ddpitch{font-size:13.5px;color:var(--ink2);line-height:1.75;margin:12px 0 0}
+.ddbtn{display:block;width:100%;margin-top:14px;border:0;border-radius:6px;padding:15px;font-size:16px;font-weight:700;letter-spacing:.06em;background:var(--seal);color:#FFF6F2;box-shadow:0 3px 0 var(--seal-d)}
+.ddbtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--seal-d)}
+.ddbtn:disabled{opacity:.7;cursor:default}
+.ddok{font-size:13px;color:var(--sel);text-align:center;margin-top:10px;line-height:1.6}
+.ddok.dim{color:var(--ink3)}
+.closing{font:600 14.5px/1.7 var(--serif);text-align:center;margin:6px 8px 0;color:var(--ink2)}
+.cta{text-align:center;margin:20px 0 0}
+.cta .c2{border:1px solid var(--ink3);background:none;color:var(--ink2);border-radius:6px;padding:10px 24px;font-size:14px}
+/* 海报 */
+#posterBox{display:none;position:fixed;inset:0;z-index:70;background:rgba(20,30,32,.86);flex-direction:column;align-items:center;justify-content:center;padding:18px}
+#posterBox.on{display:flex}
+#posterImg{display:block;max-width:100%;max-height:74vh;border-radius:3px;box-shadow:0 12px 32px rgba(0,0,0,.4);-webkit-touch-callout:default}
+.pb-tip{color:#E3E9E5;font-size:14px;margin:14px 0 12px;text-align:center}
+.pb-row{display:flex;gap:10px}
+.pb-row a,.pb-row button{border:1px solid rgba(247,248,244,.6);background:transparent;color:var(--paper);border-radius:6px;padding:9px 20px;font-size:14px;text-decoration:none}
+.pb-row a{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+/* 弹窗与提示 */
+#confirmBox{display:none;position:fixed;inset:0;background:rgba(28,42,45,.5);z-index:80;align-items:center;justify-content:center;padding:24px}
+#confirmBox.on{display:flex}
+.dlg{background:var(--paper);border-radius:10px;padding:22px 20px 16px;width:min(340px,100%)}
+.dlg h3{font:800 18px/1.4 var(--serif);margin:0 0 8px}
+.dlg p{font-size:14px;color:var(--ink2);margin:0 0 18px}
+.dlg .row{display:flex;gap:10px}
+.dlg .row button{flex:1;padding:11px;border-radius:6px;font-size:14.5px;border:0}
+.dlg .ghost{background:#E2E8E4;color:var(--ink)}
+.dlg .go{background:var(--ink);color:var(--paper)}
+.dlg .danger{background:var(--seal);color:#fff}
+#toast{position:fixed;left:50%;bottom:34px;transform:translate(-50%,16px);background:var(--ink);color:var(--paper);font-size:13.5px;padding:10px 16px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:90;max-width:86vw;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (min-width:640px){.h-display{font-size:44px}.shell{padding-top:36px}.stagebar{margin-top:-36px}}
+#scGo{letter-spacing:.06em}
+
+/* 证物卡（基础摸底逐步积累） */
+.evidence{max-height:168px;overflow:auto;margin:0 0 12px;padding-top:10px;border-top:1px dashed var(--line)}
+.ev-cap{font-size:12.5px;color:var(--ink2);font-weight:600;margin-bottom:7px}
+.evcard{font-size:12px;line-height:1.4;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--white);margin-bottom:6px}
+.evcard b{display:block;color:var(--seal);font-size:11.5px;margin-bottom:2px;font-weight:700}
+.evcard span{color:var(--ink)}
+
+/* 证据墙 */
+.evwall{display:flex;align-items:stretch;gap:7px;margin-top:7px;flex-wrap:wrap}
+.wall-grp{display:flex;flex-wrap:wrap;align-items:center;gap:5px;padding:6px 8px;border-radius:6px;background:#F2F5F2}
+.wall-tag{flex:none;font-size:11px;font-weight:700;padding:2px 6px;border-radius:4px;color:#fff}
+.wall-tag.ev{background:#8B6D3F}.wall-tag.clue{background:#4E6B62}
+.wall-item{font-size:11.5px;color:var(--ink2);line-height:1.5}
+.wall-arrow{color:var(--ink3);font-size:14px;align-self:center}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <!-- 欢迎页：通关文牒 -->
+  <div id="welcome" class="screen">
+    <div class="brandbar"><span class="mark">智</span>爱智企业AI检测</div>
+    <h1 class="h-display">理清企业现状，<br>再看 AI 怎么用。</h1>
+    <p class="lede">填写企业情况，选出当前最想解决的问题。通过基础题和定制追问，了解企业风格，梳理问题原因与改善建议。</p>
+    <div class="passport" id="wPass">
+      <div class="pp-head"><b>通关文牒</b><span id="wPassState">五关待答</span></div>
+      <ul class="pp-seals"><li><span class="seal" data-st="0">摸底</span><em>第一关</em></li><li><span class="seal" data-st="1">定向</span><em>第二关</em></li><li><span class="seal" data-st="2">深挖</span><em>第三关</em></li><li><span class="seal" data-st="3">细查</span><em>第四关</em></li><li><span class="seal" data-st="4">收官</span><em>第五关</em></li></ul>
+      <div class="pp-rank"><span class="seal big">企业<br>画像</span><p><b>从实际情况出发</b>12 道基础题，3 轮定制追问；回答完成后查看企业类型和问题诊断书。</p></div>
+    </div>
+    <button class="bigbtn" onclick="startFlow()">开始测评</button>
+    <p class="resume" id="resumeRow" style="display:none"><span id="resumeTxt">上次的测评还没做完</span><b onclick="resumeFlow()">继续上次测评</b></p>
+    <p class="peerline" id="welcomePeer" style="display:none"></p>
+    <div class="rules">
+      <p><b>怎么回答</b>先登记企业情况和经营难题，其余以点选为主。不清楚的内容照实选择，进度自动保存在本机。</p>
+      <p><b>得到什么</b>企业风格类型，以及主痛点分析、可能原因和具体改善建议。报告保留回答依据，方便核对。</p>
+      <p><b>分析范围</b>本次重点分析第一个痛点；其他痛点可联系我们继续分析。诊断结果仅供参考。</p>
+    </div>
+  </div>
+
+  <!-- 入关登记（固定 5 题） -->
+  <div id="profile" style="display:none">
+    <div class="rcard rhead">
+      <div class="stepline"><span class="on">登记</span><span>提问</span><span>作答</span><span>报告</span></div>
+      <h2 class="pg-t">先认识一下你的公司</h2>
+      <p class="ld">填写联系信息，再选择企业情况。AI 助手出什么题，由这些信息决定。</p>
+    </div>
+    <div class="rcard">
+      <div class="qblock" id="blk1"><div class="qblabel"><b>1</b>您的联系信息</div>
+        <input id="pfName" class="inputx" placeholder="怎么称呼您（必填）" autocomplete="name">
+        <input id="pfPhone" class="inputx" type="tel" placeholder="手机号（必填）" autocomplete="tel">
+        <input id="pfCompany" class="inputx" placeholder="公司名称（必填，不会出现在分享海报上）" autocomplete="organization">
+        <div class="qbsub" style="margin-top:4px">您的岗位</div>
+        <div class="optwrap" data-q="role"><button class="opt-pill" data-v="企业主 / 总经理">企业主 / 总经理</button><button class="opt-pill" data-v="高管（副总、总监）">高管（副总、总监）</button><button class="opt-pill" data-v="数字化 / IT 负责人">数字化 / IT 负责人</button><button class="opt-pill" data-v="生产 / 质量 / 运营负责人">生产 / 质量 / 运营负责人</button><button class="opt-pill" data-v="销售 / 市场负责人">销售 / 市场负责人</button><button class="opt-pill" data-v="采购 / 供应链负责人">采购 / 供应链负责人</button><button class="opt-pill" data-v="其他岗位">其他岗位</button></div>
+      </div>
+      <div class="qblock" id="blk2"><div class="qblabel"><b>2</b>所属行业</div>
+        <div class="optwrap" data-q="sector"><button class="opt-pill" data-v="装备制造">装备制造</button><button class="opt-pill" data-v="汽车与交通">汽车与交通</button><button class="opt-pill" data-v="电子与半导体">电子与半导体</button><button class="opt-pill" data-v="材料与化工">材料与化工</button><button class="opt-pill" data-v="能源与电力">能源与电力</button><button class="opt-pill" data-v="食品与消费品">食品与消费品</button><button class="opt-pill" data-v="医药与医疗">医药与医疗</button><button class="opt-pill" data-v="农业与农产品">农业与农产品</button><button class="opt-pill" data-v="建筑与楼宇">建筑与楼宇</button><button class="opt-pill" data-v="商贸与物流">商贸与物流</button><button class="opt-pill" data-v="住宿餐饮与文旅">住宿餐饮与文旅</button><button class="opt-pill" data-v="金融与保险">金融与保险</button><button class="opt-pill" data-v="软件与科技服务">软件与科技服务</button><button class="opt-pill" data-v="商务与专业服务">商务与专业服务</button><button class="opt-pill" data-v="教育与科研">教育与科研</button><button class="opt-pill" data-v="其他行业">其他行业</button></div>
+        <div id="subBox" style="display:none">
+          <div class="qbsub" style="margin-top:12px" id="subLabel">细分领域</div>
+          <div class="optwrap" id="subPills" data-q="industry"></div>
+          <input id="pfIndOther" class="inputx" style="display:none;margin-top:10px" maxlength="20" placeholder="请填写细分行业（如：光学镜片）">
+        </div>
+      </div>
+      <div class="qblock" id="blk3"><div class="qblabel"><b>3</b>业务形态与公司规模</div>
+        <div class="qbsub">主要怎么做生意</div>
+        <div class="optwrap" data-q="mode"><button class="opt-pill" data-v="离散制造（按件加工/装配）">离散制造（按件加工/装配）</button><button class="opt-pill" data-v="流程制造（连续/批量生产）">流程制造（连续/批量生产）</button><button class="opt-pill" data-v="项目制交付（工程、成套、定制）">项目制交付（工程、成套、定制）</button><button class="opt-pill" data-v="贸易与分销">贸易与分销</button><button class="opt-pill" data-v="服务与运营">服务与运营</button><button class="opt-pill" data-v="软件与技术服务">软件与技术服务</button><button class="opt-pill" data-v="多种兼有">多种兼有</button></div>
+        <div class="qbsub" style="margin-top:12px">公司规模</div>
+        <div class="optwrap" data-q="scale">
+          <button class="opt-pill" data-v="50 人以下 · 小微">50 人以下 · 小微</button>
+          <button class="opt-pill" data-v="50-200 人 · 小型">50-200 人 · 小型</button>
+          <button class="opt-pill" data-v="200-1000 人 · 中型">200-1000 人 · 中型</button>
+          <button class="opt-pill" data-v="1000-5000 人 · 大型">1000-5000 人 · 大型</button>
+          <button class="opt-pill" data-v="5000 人以上 · 集团">5000 人以上 · 集团</button>
+        </div>
+      </div>
+      <div class="qblock" id="blk4"><div class="qblabel"><b>4</b>现有系统与数据条件</div>
+        <div class="optwrap" data-q="systems"><button class="opt-pill" data-v="基本靠纸面、Excel 和微信">基本靠纸面、Excel 和微信</button><button class="opt-pill" data-v="只有财务或进销存软件">只有财务或进销存软件</button><button class="opt-pill" data-v="有 ERP 等核心系统，业务数据多靠人工补录">有 ERP 等核心系统，业务数据多靠人工补录</button><button class="opt-pill" data-v="核心系统较全，数据部分打通">核心系统较全，数据部分打通</button><button class="opt-pill" data-v="系统完整，数据实时可查可比">系统完整，数据实时可查可比</button><button class="opt-pill" data-v="说不清">说不清</button></div>
+      </div>
+      <div class="qblock" id="blk5"><div class="qblabel"><b>5</b>最想让 AI 先解决哪类问题</div>
+        <div class="optwrap" data-q="focus"><button class="opt-pill" data-v="质量与检验">质量与检验</button><button class="opt-pill" data-v="生产与交付">生产与交付</button><button class="opt-pill" data-v="设备与运维">设备与运维</button><button class="opt-pill" data-v="销售与获客">销售与获客</button><button class="opt-pill" data-v="报价与投标">报价与投标</button><button class="opt-pill" data-v="售后与客户服务">售后与客户服务</button><button class="opt-pill" data-v="采购与供应链">采购与供应链</button><button class="opt-pill" data-v="研发设计与技术文档">研发设计与技术文档</button><button class="opt-pill" data-v="知识沉淀与培训">知识沉淀与培训</button><button class="opt-pill" data-v="能耗与成本">能耗与成本</button><button class="opt-pill" data-v="安全环保与合规">安全环保与合规</button><button class="opt-pill" data-v="经营分析与决策">经营分析与决策</button><button class="opt-pill" data-v="还没想好">还没想好</button></div>
+        <div class="qbsub" style="margin-top:14px">主要产品或服务（选填）</div>
+        <input id="pfProducts" class="inputx" maxlength="40" placeholder="如：主营产品或服务">
+      </div>
+      <p id="pfErr" class="ferr"></p>
+      <button id="pfSubmit" class="bigbtn" onclick="submitProfile()">下一步</button>
+      <p class="foot-note">提交即表示同意：信息只用于本次检测与顾问联系</p>
+    </div>
+  </div>
+
+  <!-- 报上难题 -->
+  <div id="brief" style="display:none">
+    <div class="rcard rhead">
+      <div class="stepline"><span class="ok">登记</span><span class="on">提问</span><span>作答</span><span>报告</span></div>
+      <h2 class="pg-t">说说最头疼的事</h2>
+      <p class="ld">说清最头疼的事，AI 助手才问得准。至少填第一个；选好环节后可点常见情况直接填入，再按实际改。</p>
+    </div>
+    <div class="rcard">
+      <h3 class="bh">最头疼的事<small>必填</small></h3>
+      <select id="b1Area" class="inputx">
+        <option value="">发生在哪个环节（必选）</option>
+        <option>质量与检验</option><option>生产与交付</option><option>设备与运维</option><option>销售与获客</option><option>报价与投标</option><option>售后与客户服务</option><option>采购与供应链</option><option>研发设计与技术文档</option><option>知识沉淀与培训</option><option>能耗与成本</option><option>安全环保与合规</option><option>经营分析与决策</option><option>其他</option>
+      </select>
+      <div class="hintrow" id="b1Hints"></div>
+      <textarea id="b1Phen" class="inputx" rows="2" maxlength="120" placeholder="具体发生了什么（必填）"></textarea>
+      <select id="b1Impact" class="inputx">
+        <option value="">主要影响</option>
+        <option>质量风险</option><option>成本上升</option><option>交付延误</option><option>人力紧张</option><option>客户投诉</option><option>增长受阻</option><option>合规风险</option><option>说不清</option>
+      </select>
+      <h3 class="bh">还想说的第二件<small>选填</small></h3>
+      <select id="b2Area" class="inputx">
+        <option value="">发生在哪个环节</option>
+        <option>质量与检验</option><option>生产与交付</option><option>设备与运维</option><option>销售与获客</option><option>报价与投标</option><option>售后与客户服务</option><option>采购与供应链</option><option>研发设计与技术文档</option><option>知识沉淀与培训</option><option>能耗与成本</option><option>安全环保与合规</option><option>经营分析与决策</option><option>其他</option>
+      </select>
+      <div class="hintrow" id="b2Hints"></div>
+      <textarea id="b2Phen" class="inputx" rows="2" maxlength="120" placeholder="发生了什么"></textarea>
+      <h3 class="bh">还想说的第三件<small>选填</small></h3>
+      <select id="b3Area" class="inputx">
+        <option value="">发生在哪个环节</option>
+        <option>质量与检验</option><option>生产与交付</option><option>设备与运维</option><option>销售与获客</option><option>报价与投标</option><option>售后与客户服务</option><option>采购与供应链</option><option>研发设计与技术文档</option><option>知识沉淀与培训</option><option>能耗与成本</option><option>安全环保与合规</option><option>经营分析与决策</option><option>其他</option>
+      </select>
+      <div class="hintrow" id="b3Hints"></div>
+      <textarea id="b3Phen" class="inputx" rows="2" maxlength="120" placeholder="发生了什么"></textarea>
+      <h3 class="bh">其他约束<small>选填</small></h3>
+      <textarea id="bNotes" class="inputx" rows="2" maxlength="120" placeholder="如：人手紧张；业务数据不能出公司；今年要迎接客户审核"></textarea>
+      <p id="bfErr" class="ferr"></p>
+      <button id="bfSubmit" class="bigbtn" onclick="submitBrief()">开始答题</button>
+    </div>
+  </div>
+
+  <!-- 闯关作答 -->
+  <div id="quiz" style="display:none">
+    <div class="stagebar">
+      <div class="sb-top">
+        <span class="sb-name" id="sbName">基础摸底</span>
+        <span class="prog-num"><b id="qNow">1</b>/<span id="qTotal">30</span></span>
+        <button class="rail-toggle" id="railToggle" onclick="toggleSide()" aria-label="打开答题格">答题格<span class="n" id="railCount">0/30</span></button>
+      </div>
+      <div class="route" id="route"><div class="track"><i id="progBar"></i></div><div class="rnode"><span class="seal">一</span><em>基础摸底</em></div><div class="rnode"><span class="seal">二</span><em>基础摸底</em></div><div class="rnode"><span class="seal">三</span><em>定制追问</em></div><div class="rnode"><span class="seal">四</span><em>定制追问</em></div><div class="rnode"><span class="seal">五</span><em>定制追问</em></div></div>
+      <p class="sb-desc" id="progTip"></p>
+    </div>
+    <div class="qcard" id="qCard">
+      <span class="dim-tag" id="qDim"></span>
+      <div class="qtext" id="qText"></div>
+      <div class="ratelist" id="qOpts" role="radiogroup" aria-labelledby="qText"></div>
+    </div>
+    <div class="quiz-foot">
+      <button class="back" id="btnBack" onclick="prevQ()">上一题</button>
+      <span class="hint" id="footHint"></span>
+      <button class="nextbtn" id="btnNext" onclick="nextQ()" disabled>下一题</button>
+    </div>
+  </div>
+  <div class="side-mask" id="sideMask" onclick="toggleSide()"></div>
+  <aside class="sidepanel" id="sidePanel" style="display:none" aria-label="答题格">
+    <div class="sp-head">
+      <span class="sp-title">已答 <b id="spDone">0</b><i>/<span id="spTotal">30</span></i></span>
+      <button class="sp-close" onclick="toggleSide()" aria-label="收起答题格">✕</button>
+    </div>
+    <div class="sidegrid" id="qGrid"></div>
+    <div class="evidence" id="evidenceBox" style="display:none"></div>
+    <button class="sp-finish" id="spFinish" onclick="finishNow()" disabled>完成答题，查看报告</button>
+  </aside>
+
+  <!-- 结算：文牒 + 类型卡 + 分享 + 诊断书 -->
+  <div id="report" style="display:none">
+    <div id="reportBody"></div>
+    <div class="cta">
+      <button class="c2" onclick="askRestart()">重新检测</button>
+    </div>
+    <p class="foot-note">爱智企业AI检测 · 诊断书由 AI 依据问卷作答生成，供决策参考</p>
+  </div>
+</div>
+
+<!-- 过关弹层 -->
+<div id="stageClear" role="dialog" aria-modal="true" aria-labelledby="scTitle">
+  <div class="sc-card">
+    <span class="seal big on" id="scSeal"></span>
+    <h2 class="sc-t" id="scTitle"></h2>
+    <p class="sc-p" id="scText"></p>
+    <div class="sc-mini" id="scMini"></div>
+    <p class="sc-next" id="scNext"></p>
+    <button class="bigbtn" id="scGo" onclick="continueAfterClear()"></button>
+  </div>
+</div>
+
+<!-- 测评海报 -->
+<div id="posterBox" role="dialog" aria-modal="true" aria-label="测评海报">
+  <img id="posterImg" alt="测评海报">
+  <p class="pb-tip">长按图片保存或发给同行；电脑上点「保存图片」</p>
+  <div class="pb-row"><a id="posterSave" download="爱智AI测评报告.png" href="#">保存图片</a><button onclick="closePoster()">关闭</button></div>
+</div>
+
+<div id="confirmBox">
+  <div class="dlg">
+    <h3 id="cfTitle"></h3>
+    <p id="cfText"></p>
+    <div class="row">
+      <button class="ghost" id="cfCancel"></button>
+      <button id="cfOk"></button>
+    </div>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="github-config.js"></script>
+<script src="github-bridge.js"></script>
+<script>
+
+/* ================= 爱智企业AI检测 v5.13 · 通关文牒 ================= */
+/* 接口基址：经站点网址访问时用同源；直接打开本地文件（file://）或被嵌入预览时，自动连线上诊断服务，保证随处可用 */
+const API_BASE = window.ActionsBridge ? "github-actions" : "";
+const TRACK_URL = "/api/track";
+const CFG = { target: 30 };
+const FIXED_N = 12;   // 固定题 12 道（三轮追问：12 固定 + 3×6 追问题 = 30）
+const ROUND_N = 6;    // 每轮追问 6 道
+const STATE_KEY = "aizhi_v5_state";
+const PROFILE_KEY = "aizhi_v5_profile";
+let APP_TOKEN = Date.now();
+
+/* ---------- 关卡：按题位分关（每关 6 题），与题目内容无关，边出边答也稳定 ---------- */
+const PER = 6;
+const CN = ["一", "二", "三", "四", "五"];
+const STAGES = [
+  { n: "基础摸底", d: "确认企业的基本经营习惯" },
+  { n: "经营定向", d: "确认经营风格与数据条件" },
+  { n: "定制追问", d: "围绕主痛点，确认问题是否真实、频繁" },
+  { n: "影响细查", d: "判断问题影响哪些经营环节" },
+  { n: "改善收官", d: "追问原因、责任边界与改善条件" }
+];
+const LEVELS = [["L1", "机制缺失"], ["L2", "局部做法"], ["L3", "机制初具"], ["L4", "机制稳定"], ["L5", "机制成熟"]];
+/* ---------- 证物卡：固定题答案 → 证物（基础摸底逐步积累，只陈述事实、不下结论） ---------- */
+const FIXED_LABEL = { A1: "员工 AI 使用", A2: "公司 AI 应用", A3: "老板 AI 使用", A4: "数字化项目", A5: "AI 负责人", A6: "AI 行动", A7: "资料外发管理", A8: "资料电子化", P1: "技术引进时机", P2: "经营决策依据" };
+const EVIDENCE_MAP = {
+  A1: { D: "AI 尚未在日常工作中普及", C: "AI 使用集中在个别人", E: "员工 AI 使用情况掌握不清" },
+  A2: { D: "尚无正式在用的 AI 应用", C: "AI 应用尚在试用，未进日常流程", E: "公司 AI 应用情况掌握不清" },
+  A3: { D: "老板本人尚未使用 AI", C: "老板使用 AI 尚未形成习惯" },
+  A4: { C: "最近一次数字化项目未能持续使用", D: "近三年没有落地数字化项目", E: "数字化项目结局掌握不清" },
+  A5: { C: "AI 与数字化缺乏明确负责人", D: "AI 与数字化尚未有人负责", E: "AI 负责人情况掌握不清" },
+  A6: { C: "AI 行动停留在个人自发层面", D: "过去一年公司层面无 AI 行动", E: "AI 实际行动情况掌握不清" },
+  A7: { C: "资料外发缺乏管理", D: "资料外发风险未被关注", E: "资料外发管理情况掌握不清" },
+  A8: { C: "关键经营资料电子化程度偏低", D: "关键经营资料基本未电子化", E: "资料电子化程度掌握不清" },
+  P1: { C: "新技术引进偏保守" },
+  P2: { C: "重要经营决定主要依赖经验", B: "经营决定以经验为主、数据为辅" }
+};
+function collectEvidence(){
+  const out = [];
+  S.questions.slice(0, 12).forEach(q => {
+    if(!q || !q.fixed_id) return;
+    const key = S.answers[q.id];
+    if(key === undefined) return;
+    const map = EVIDENCE_MAP[q.fixed_id];
+    if(!map || !map[key]) return;
+    out.push({ fixed_id: q.fixed_id, label: FIXED_LABEL[q.fixed_id] || q.fixed_id, text: map[key] });
+  });
+  return out;
+}
+function stageOf(i){ return Math.max(0, Math.min(STAGES.length - 1, Math.floor(i / PER))); }
+function stageLabel(st){ return "第" + CN[st] + "关 · " + STAGES[st].n; }
+// 实际关数：整卷出满是五关；万一题目没出满，按实际题数折算（每关 6 题，最后一关可以不满）
+function stageCount(){ return Math.max(1, Math.min(STAGES.length, Math.ceil(qTotalN() / PER))); }
+function stageEnd(st){ return genRunning() ? st * PER + PER : Math.min(st * PER + PER, S.questions.length); }
+function stageDone(st){ const end = stageEnd(st); if(end <= st * PER) return false; for(let i = st * PER; i < end; i++){ const q = S.questions[i]; if(!q || S.answers[q.id] === undefined) return false; } return true; }
+function stagesName(n){ return n >= STAGES.length ? "五关" : (CN[n - 1] + "关"); }
+// 与服务端计分口径一致：「说不清、待核实」任意位置都算；「不清楚、不确定、不了解、不知道」只在选项开头才算
+function isUnknownOpt(o){ return !!o && (o.unknown === true || /说不清|待核实|^\s*(不清楚|不确定|不了解|不知道)/.test(String(o.text || ""))); }
+function newRunId(){ try{ const a = new Uint8Array(8); crypto.getRandomValues(a); return "r-" + [...a].map(x => x.toString(16).padStart(2, "0")).join(""); }catch(e){ return "r-" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); } }
+
+/* ---------- 基础工具 ---------- */
+function el(id){ return document.getElementById(id); }
+let toastTimer = null;
+function toast(msg){ const t = el("toast"); t.textContent = msg; t.classList.add("show"); if(toastTimer) clearTimeout(toastTimer); toastTimer = setTimeout(()=>t.classList.remove("show"), 2400); }
+function show(id){ const n = el(id); n.style.display = "block"; n.classList.add("screen"); n.querySelectorAll(".rcard").forEach(c => c.classList.add("vis")); window.scrollTo(0,0); }
+function hide(id){ const n = el(id); n.style.display = "none"; n.classList.remove("screen"); }
+function esc(t){ const d = document.createElement("div"); d.textContent = t == null ? "" : String(t); return d.innerHTML; }
+function fetchWithTimeout(url, opts, ms){ if(window.ActionsBridge && typeof url === "string" && url.startsWith("/api/")) return window.ActionsBridge.request(url, opts); const ctl = new AbortController(); const timer = setTimeout(()=>ctl.abort(), ms); return fetch(url, Object.assign({}, opts, { signal: ctl.signal })).finally(()=>clearTimeout(timer)); }
+/* 长任务：启动作业 → 轮询取结果（单次抖动不致命；支持断点接续，重试不重复生成） */
+function friendlyErr(e, fallback){
+  const m = String((e && e.message) || e || "");
+  if(/abort|signal/i.test(m)) return fallback;
+  return m || fallback;
+}
+async function startJobAndWait(path, payload, onProgress, deadlineMs, existingJobId, onStart, pollQuery){
+  if(window.ActionsBridge) return window.ActionsBridge.wait(path, payload, onProgress, deadlineMs, existingJobId, onStart);
+  const deadline = Date.now() + (deadlineMs || 480000);
+  let jobId = existingJobId || null;
+  let restarts = 0;
+  if(jobId){
+    try{
+      const r0 = await fetchWithTimeout("/api/job/" + jobId, {}, 20000);
+      const j0 = await r0.json();
+      if(!j0 || !j0.ok || j0.status === "stale"){ jobId = null; }
+      else if(j0.status === "done"){ const rr = j0.result || {}; if(rr.ok) return rr; jobId = null; }
+    }catch(e){ jobId = null; }
+  }
+  const startNew = async () => {
+    let s = null, lastErr = null;
+    for(let i = 0; i < 2 && !s; i++){
+      try{
+        const sres = await fetchWithTimeout(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.assign({}, (typeof payload === "function" ? payload() : payload), { async: true })) }, 30000);
+        const j = await sres.json();
+        if(j && j.ok && (j.report || j.result)) return j;
+        if(j && j.ok && j.job_id) s = j; else lastErr = new Error((j && j.msg) || "任务启动失败");
+      }catch(err){ lastErr = err; await new Promise(r => setTimeout(r, 1200)); }
+    }
+    if(!s) throw new Error(friendlyErr(lastErr, "任务启动失败，请重试"));
+    jobId = s.job_id;
+    if(onStart){ try{ onStart(jobId); }catch(err){} }
+    return null;
+  };
+  let misses = 0;
+  while(Date.now() < deadline){
+    if(!jobId){
+      if(restarts >= 3) throw new Error("生成服务多次中断，请稍后重试（作答已保存）");
+      restarts++;
+      const direct = await startNew();
+      if(direct) return direct;
+      misses = 0;
+      continue;
+    }
+    await new Promise(r => setTimeout(r, 1600));
+    let j = null;
+    try{
+      const jres = await fetchWithTimeout("/api/job/" + jobId + (pollQuery ? pollQuery() : ""), {}, 20000);
+      j = await jres.json();
+    }catch(err){
+      // 网络抖动：继续等同一个作业（服务端仍在生成，换新作业会重复出题、重复计费），逐步拉长间隔
+      misses++;
+      await new Promise(r => setTimeout(r, Math.min(8000, 800 * misses)));
+      continue;
+    }
+    if(!j) continue;
+    if(j.status === "stale"){ jobId = null; continue; }
+    if(!j.ok){ jobId = null; continue; }
+    misses = 0;
+    if(onProgress && (j.progress || j.base_result)){ try{ onProgress(j.progress, j); }catch(err){} }
+    if(j.status === "done"){
+      const r = j.result || {};
+      if(!r.ok){
+        // 题库回退也不足时返回 resume/support 状态（携带已发布的题），由调用方展示恢复提示；其余失败照旧抛错
+        if(r.code === "resume_required" || r.code === "support_required") return r;
+        throw new Error(r.msg || "任务失败");
+      }
+      return r;
+    }
+  }
+  throw new Error("生成耗时较长尚未完成（作答已保存）。点重试可继续等待结果。");
+}
+function fmtChars(n){ return n > 0 ? ("已生成约 " + n + " 字") : ""; }
+function updateWaitHint(p){ const n = el("waitHint"); if(n && p) n.textContent = fmtChars(p.chars) + (p.round > 1 ? " · 正在按校验反馈修正（第 " + p.round + " 轮）" : ""); }
+function updateAssessHint(p){ const n = el("assessHint"); if(n && p) n.textContent = fmtChars(p.chars) + (p.round > 1 ? " · 正在按校验反馈修正（第 " + p.round + " 轮）" : ""); }
+function readCookie(name){ try{ const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : ''; }catch(e){ return ''; } }
+function writeCookie(name, val, days){ try{ document.cookie = name + '=' + encodeURIComponent(val) + '; max-age=' + (days * 86400) + '; path=/; SameSite=Lax'; }catch(e){} }
+function getVid(){
+  try{
+    let v = readCookie('aizhi_vid') || localStorage.getItem("aizhi_vid") || '';
+    if(v){ if(!readCookie('aizhi_vid')) writeCookie('aizhi_vid', v, 180); return v; }
+    v = "v-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2,8);
+    writeCookie('aizhi_vid', v, 180);
+    try{ localStorage.setItem("aizhi_vid", v); }catch(e){}
+    return v;
+  }catch(e){ return "v-anon-" + Date.now().toString(36); }
+}
+function track(stage, extra){
+  if(window.ActionsBridge) return;
+  if(!TRACK_URL) return;
+  try{
+    const payload = JSON.stringify(Object.assign({ stage, vid: getVid(), run: S.run || "", ua: navigator.userAgent.slice(0,200), referrer: (document.referrer||"").slice(0,150) }, extra || {}));
+    if(!API_BASE && navigator.sendBeacon && navigator.sendBeacon(TRACK_URL, new Blob([payload], { type: "application/json" }))) return;
+    fetch(TRACK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(()=>{});
+  }catch(e){}
+}
+/* 关键信息（登记、预约）的可靠送达：先直发，失败就进本地待发箱，联网/打开页面/每 30 秒自动补交，送达即出箱 */
+const OUTBOX_KEY = "aizhi_outbox";
+function readOutbox(){ try{ const a = JSON.parse(localStorage.getItem(OUTBOX_KEY) || "[]"); return Array.isArray(a) ? a : []; }catch(e){ return []; } }
+function writeOutbox(a){ try{ localStorage.setItem(OUTBOX_KEY, JSON.stringify(a.slice(-20))); }catch(e){} }
+async function postOnce(payload){
+  try{
+    const r = await fetchWithTimeout(TRACK_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: payload }, 12000);
+    const j = await r.json(); return !!(j && j.ok);
+  }catch(e){ return false; }
+}
+async function postReliable(payload, kind){
+  for(let i = 0; i < 2; i++){
+    if(await postOnce(payload)) return true;
+    await new Promise(r => setTimeout(r, 800));
+  }
+  const box = readOutbox().filter(x => x.kind !== kind);
+  box.push({ kind: kind, payload: payload, at: Date.now() });
+  writeOutbox(box);
+  return false;
+}
+let outboxBusy = false;
+async function flushOutbox(){
+  if(outboxBusy) return; outboxBusy = true;
+  try{
+    const box = readOutbox(); if(!box.length) return;
+    const keep = [];
+    for(const it of box){
+      if(Date.now() - (it.at || 0) > 30 * 864e5) continue;
+      if(await postOnce(it.payload)){ if(it.kind === "consult_other" && S.consultedOther === "pending"){ S.consultedOther = true; saveState(); if(S.phase === "report" && S.report) renderReport(S.report); } if(it.kind === "consult" && S.consulted === "pending"){ S.consulted = true; saveState(); if(S.phase === "report" && S.report) renderReport(S.report); } }
+      else keep.push(it);
+    }
+    const seen = {}; box.forEach(b => { seen[b.kind + b.at] = 1; });
+    writeOutbox(keep.concat(readOutbox().filter(x => !seen[x.kind + x.at])));
+  }finally{ outboxBusy = false; }
+}
+function askConfirm(o){
+  el("cfTitle").textContent = o.title; el("cfText").textContent = o.text;
+  el("cfCancel").textContent = o.cancel;
+  const ok = el("cfOk"); ok.textContent = o.ok; ok.className = o.danger ? "danger" : "go";
+  ok.onclick = ()=>{ el("confirmBox").classList.remove("on"); o.onOk && o.onOk(); };
+  el("cfCancel").onclick = ()=>{ el("confirmBox").classList.remove("on"); o.onCancel && o.onCancel(); };
+  el("confirmBox").classList.add("on");
+}
+
+/* ---------- 状态 ---------- */
+function blankState(){ return { profile: null, brief: null, questions: [], research_note: null, answers: {}, cur: 0, phase: "welcome", report: null, pendingGen: null, pendingAssess: null, quickType: null, pendingQuick: null, cleared: [], percent: null, peer: null, rank: null, typePre: null, round: 0, run: newRunId(), scoringVersion: null }; }
+let S = blankState();
+let gen = { busy: false, error: null };
+let assess = { busy: false, error: null, quickBusy: false };
+function saveState(){ try{ localStorage.setItem(STATE_KEY, JSON.stringify(S)); }catch(e){} }
+function loadState(){ try{ const s = JSON.parse(localStorage.getItem(STATE_KEY) || "null"); if(s && Array.isArray(s.questions)){ if(typeof s.round !== "number") s.round = deriveRound(s.questions.length); return s; } }catch(e){} return null; }
+function clearState(){ try{ localStorage.removeItem(STATE_KEY); }catch(e){} }
+function answeredCount(){ return Object.keys(S.answers).length; }
+function firstUnanswered(){ for(let i=0;i<S.questions.length;i++){ if(S.answers[S.questions[i].id] === undefined) return i; } return S.questions.length; }
+function qTotalN(){ return genRunning() ? Math.max(S.questions.length, CFG.target) : (S.questions.length || CFG.target); }
+// genDone === false 表示整卷仍在边出边答中（旧存档无此字段，视为已出完）
+function genRunning(){ return S.genDone === false; }
+// 三轮追问：12 固定题 + 3×6 追问题。S.round 表示「接下来要请求的轮次」（0=固定题，1/2/3=三轮，4=全部出完）
+function deriveRound(n){ if(n >= CFG.target) return 4; if(n >= FIXED_N + 2 * ROUND_N) return 3; if(n >= FIXED_N + ROUND_N) return 2; if(n >= FIXED_N) return 1; return 0; }
+function quizComplete(){ const allDone = S.questions.every(q => S.answers[q.id] !== undefined); return allDone && !genRunning() && (S.questions.length >= CFG.target); }
+// 作答状态：说不清→unknown；得分在中点及以上→strong，否则 weak（与后端 computeScores 口径一致）
+function answerState(q, key){ const opt = (q.options || []).find(o => o.key === key); if(!opt) return "skipped"; if(isUnknownOpt(opt)) return "unknown"; const scores = (q.options || []).map(o => typeof o.score === "number" ? o.score : null).filter(x => x != null); if(!scores.length) return "strong"; const mid = (Math.max.apply(null, scores) + Math.min.apply(null, scores)) / 2; return opt.score >= mid ? "strong" : "weak"; }
+// 构造回传给后端的已答摘要：题号 + 题干摘要 + 所选选项 + 状态
+function buildAnsweredSummary(){ return S.questions.filter(q => S.answers[q.id] !== undefined).map(q => { const key = S.answers[q.id]; const opt = (q.options || []).find(o => o.key === key); return { id: q.id, stem: String(q.stem || "").slice(0, 80), key: key, text: opt ? opt.text : "", state: answerState(q, key) }; }); }
+function resetForNew(){ APP_TOKEN = Date.now(); S = blankState(); gen = { busy: false, error: null, progress: null, t0: 0 }; assess = { busy: false, error: null, quickBusy: false }; clearState(); }
+
+/* ---------- 入关登记（固定 5 题）状态 ---------- */
+/* 受众行业集（app/industries.json：西门子 Xcelerator 行业字典 ∪ 工博会专业展，构建时内联） */
+const IND = {"sectors": [{"name": "装备制造", "ph": "如：数控折弯机、包装机械", "subs": ["数控机床与金属加工", "通用与专用设备", "工业自动化与机器人", "仪器仪表", "模具与基础零部件", "电气设备与电线电缆"]}, {"name": "汽车与交通", "ph": "如：制动系统零部件", "subs": ["整车制造", "汽车零部件", "新能源与智能网联", "轨道交通、船舶与航空", "交通运输与出行服务"]}, {"name": "电子与半导体", "ph": "如：电源模块、连接器", "subs": ["集成电路与半导体", "3C 消费电子", "电子元器件", "智能硬件与物联网", "通信设备"]}, {"name": "材料与化工", "ph": "如：改性塑料粒子、特种涂料", "subs": ["化工与精细化工", "石油炼化", "新材料", "钢铁与有色金属", "塑料、橡胶与复合材料", "建材、玻璃与陶瓷"]}, {"name": "能源与电力", "ph": "如：分布式光伏电站运维", "subs": ["电力与电网", "光伏、风电与储能", "采矿、油气与煤炭", "节能环保与水务燃气"]}, {"name": "食品与消费品", "ph": "如：低温乳制品、休闲服装", "subs": ["食品饮料与烟草", "纺织服装与鞋帽", "家居家具", "家用电器", "日化、包装与印刷", "造纸与木制品", "文教体育与工艺用品"]}, {"name": "医药与医疗", "ph": "如：骨科植入器械、中成药", "subs": ["制药与生物", "医疗器械", "医院与诊疗服务", "健康与养老"]}, {"name": "农业与农产品", "ph": "如：生猪养殖、大米加工", "subs": ["种植与养殖", "农产品加工", "林业与渔业", "农资与农机"]}, {"name": "建筑与楼宇", "ph": "如：商业综合体物业管理", "subs": ["建筑工程与施工", "商业楼宇与物业", "园区与数据中心", "工程设计与咨询"]}, {"name": "商贸与物流", "ph": "如：工业品分销、冷链仓配", "subs": ["批发分销与外贸", "零售与连锁", "仓储物流与供应链", "电商"]}, {"name": "住宿餐饮与文旅", "ph": "如：连锁中餐、精品酒店", "subs": ["酒店与住宿", "餐饮与连锁", "旅游与景区", "文化体育与娱乐"]}, {"name": "金融与保险", "ph": "如：设备融资租赁", "subs": ["银行", "保险", "证券、基金与投资", "融资租赁与小额信贷"]}, {"name": "软件与科技服务", "ph": "如：MES 实施、检测认证服务", "subs": ["软件与信息服务", "系统集成与工业互联网", "检测认证", "研发与技术服务"]}, {"name": "商务与专业服务", "ph": "如：企业财税代理、展会服务", "subs": ["管理咨询", "人力资源", "广告营销与传媒", "法律与财税", "房地产开发与中介", "会展与活动"]}, {"name": "教育与科研", "ph": "如：职业技能培训", "subs": ["高校与科研院所", "职业教育与培训", "教育服务"]}, {"name": "其他行业", "ph": "如：主营产品或服务", "subs": []}], "legacy": {"汽车零部件": "汽车与交通", "机械制造": "装备制造", "电子电器": "电子与半导体", "化工新材料": "材料与化工", "食品医药": "食品与消费品", "纺织服装": "食品与消费品", "金属加工": "装备制造", "其他制造业": "其他行业"}};
+const AREAS = ["质量与检验", "生产与交付", "设备与运维", "销售与获客", "报价与投标", "售后与客户服务", "采购与供应链", "研发设计与技术文档", "知识沉淀与培训", "能耗与成本", "安全环保与合规", "经营分析与决策"];
+const OTHER_SUB = "其他细分";
+let PF = { role: "", sector: "", industry: "", mode: "", scale: "", systems: "", focus: "" };
+function sectorOf(name){ return (IND.sectors || []).find(x => x.name === name) || null; }
+function pickPill(wrap, b){
+  wrap.querySelectorAll(".opt-pill").forEach(x => { x.classList.remove("on"); x.setAttribute("aria-pressed", "false"); });
+  if(b){ b.classList.add("on"); b.setAttribute("aria-pressed", "true"); }
+}
+function bindWrap(wrap){
+  const key = wrap.getAttribute("data-q");
+  wrap.querySelectorAll(".opt-pill").forEach(b => {
+    b.setAttribute("aria-pressed", b.classList.contains("on") ? "true" : "false");
+    b.onclick = () => {
+      pickPill(wrap, b);
+      PF[key] = b.getAttribute("data-v");
+      if(key === "sector") renderSubs(PF.sector, "");
+      if(key === "industry") toggleIndOther(PF.industry === OTHER_SUB);
+    };
+  });
+}
+function toggleIndOther(on, val){
+  const inp = el("pfIndOther"); inp.style.display = on ? "block" : "none";
+  if(val !== undefined) inp.value = val;
+  if(on && val === undefined) try{ inp.focus(); }catch(e){}
+}
+// 选了大类 → 展开细分领域；「其他行业」直接填写
+function renderSubs(sector, keep){
+  const sec = sectorOf(sector), box = el("subBox"), wrap = el("subPills");
+  PF.industry = "";
+  if(!sec){ box.style.display = "none"; return; }
+  box.style.display = "block";
+  el("pfProducts").placeholder = sec.ph || "如：主营产品或服务";
+  if(!sec.subs.length){
+    el("subLabel").textContent = "请填写所在行业";
+    wrap.innerHTML = ""; wrap.style.display = "none";
+    PF.industry = OTHER_SUB; toggleIndOther(true, keep || ""); return;
+  }
+  el("subLabel").textContent = "细分领域";
+  wrap.style.display = "";
+  wrap.innerHTML = sec.subs.concat([OTHER_SUB]).map(v => '<button class="opt-pill" data-v="' + esc(v) + '">' + esc(v) + '</button>').join("");
+  bindWrap(wrap);
+  const hit = keep && sec.subs.indexOf(keep) >= 0 ? keep : (keep ? OTHER_SUB : "");
+  if(hit){ pickPill(wrap, wrap.querySelector('.opt-pill[data-v="' + hit + '"]')); PF.industry = hit; }
+  toggleIndOther(hit === OTHER_SUB, hit === OTHER_SUB ? keep : "");
+}
+function bindPills(){ document.querySelectorAll("#profile .optwrap").forEach(bindWrap); }
+bindPills();
+// 行业展示名：大类·细分（细分即大类或自填时只显示一个）
+function industryLabel(p){ p = p || {}; const a = p.sector || "", b = p.industry || ""; return a && b && a !== b && a !== "其他行业" ? a + "·" + b : (b || a); }
+// 送给 AI 的档案不含称呼与手机号
+function aiProfile(p){ const o = Object.assign({}, p || {}); delete o.name; delete o.phone; return o; }
+
+/* ---------- 欢迎页进度线：按存档点亮已过的阶段 ---------- */
+function paintWelcome(cleared){
+  const set = cleared || [];
+  document.querySelectorAll("#wPass .seal[data-st]").forEach(n => { n.classList.toggle("on", set.indexOf(Number(n.dataset.st)) >= 0); });
+  el("wPassState").textContent = set.length ? ("已过 " + set.length + " 关") : "五关待答";
+}
+
+/* ---------- 入口 ---------- */
+function startFlow(){
+  const st = loadState();
+  const has = st && (Object.keys(st.answers||{}).length || st.phase === "report" || st.phase === "quiz");
+  if(has){ askConfirm({ title: "重新开始测评？", text: "本机还有一份未完成的测评，重新开始会覆盖它。", cancel: "取消", ok: "重新开始", onOk: ()=>{ resetForNew(); hide("welcome"); show("profile"); prefillProfile(); } }); return; }
+  resetForNew(); hide("welcome"); show("profile"); prefillProfile();
+}
+function resumeFlow(){
+  const st = loadState(); if(!st) return;
+  S = Object.assign(blankState(), { phase: "quiz" }, st);
+  if(!Array.isArray(S.cleared)) S.cleared = [];
+  if(!S.run) S.run = newRunId();
+  hide("welcome");
+  if(S.phase === "report" && S.report){ show("report"); renderReportShell(); renderRank(S.report, false); renderShare(); if(S.quickType) renderTypeCard(S.quickType); else runQuick(); renderReport(S.report); fetchPeer(); return; }
+  if(S.phase === "report" && !S.report){ show("report"); finishToReport(); return; }
+  if(S.phase === "brief"){ show("brief"); prefillBrief(); return; }
+  if(S.phase === "profile"){ show("profile"); prefillProfile(); return; }
+  show("quiz");
+  if(quizComplete()){ finishToReport(); return; }
+  if(!S.questions.length){ renderWaiting(); generatePaper(); }
+  else {
+    S.cur = Math.max(0, Math.min(S.cur, S.questions.length - (genRunning() ? 0 : 1)));
+    renderQ(0);
+    if(genRunning()) generatePaper();
+  }
+}
+function prefillProfile(){
+  let p = null; try{ p = JSON.parse(localStorage.getItem(PROFILE_KEY) || "null"); }catch(e){}
+  if(!p) return;
+  const set = (id, v) => { const n = el(id); if(n && v) n.value = v; };
+  set("pfName", p.name); set("pfPhone", p.phone); set("pfCompany", p.company); set("pfProducts", p.products);
+  // 旧版档案只有行业名：按对照表归入大类，原行业名作为自填细分保留
+  const sector = p.sector || (IND.legacy || {})[p.industry] || "";
+  ["role", "sector", "mode", "scale", "systems", "focus"].forEach(k => {
+    const v = k === "sector" ? sector : p[k];
+    if(!v) return;
+    const wrap = document.querySelector('#profile .optwrap[data-q="' + k + '"]'); if(!wrap) return;
+    wrap.querySelectorAll(".opt-pill").forEach(x => { if(x.getAttribute("data-v") === v){ pickPill(wrap, x); PF[k] = v; } });
+  });
+  if(PF.sector) renderSubs(PF.sector, p.industry && p.industry !== PF.sector ? p.industry : "");
+}
+
+/* ---------- 入关登记 ---------- */
+async function submitProfile(){
+  const v = id => (el(id).value || "").trim();
+  const name = v("pfName"), phone = v("pfPhone").replace(/[\s-]/g, ""), company = v("pfCompany");
+  const products = v("pfProducts");
+  const err = el("pfErr");
+  const fail = (m, focusId) => { err.textContent = m; err.style.display = "block"; try{ el(focusId).scrollIntoView({ behavior: "smooth", block: "center" }); }catch(e){} };
+  if(name.length < 2) return fail("请填写 2-20 个字的称呼", "pfName");
+  if(!/^1[3-9]\d{9}$/.test(phone)) return fail("请输入正确的 11 位手机号", "pfPhone");
+  if(company.length < 2) return fail("请填写公司名称", "pfCompany");
+  if(!PF.role) return fail("请点选您的岗位", "blk1");
+  if(!PF.sector) return fail("请点选第 2 题：所属行业", "blk2");
+  const indOther = (el("pfIndOther").value || "").trim().slice(0, 20);
+  if(!PF.industry) return fail("请点选第 2 题：细分领域", "blk2");
+  if(PF.industry === OTHER_SUB && indOther.length < 2) return fail("请填写所在的细分行业（至少 2 个字）", "pfIndOther");
+  const industry = PF.industry === OTHER_SUB ? indOther : PF.industry;
+  if(!PF.mode) return fail("请点选第 3 题：主要怎么做生意", "blk3");
+  if(!PF.scale) return fail("请点选第 3 题：公司规模", "blk3");
+  if(!PF.systems) return fail("请点选第 4 题：现有系统与数据条件", "blk4");
+  if(!PF.focus) return fail("请点选第 5 题：最想先解决哪类问题", "blk5");
+  err.style.display = "none";
+  const profile = { name: name, phone: phone, company: company, role: PF.role, sector: PF.sector, industry: industry, mode: PF.mode, scale: PF.scale, systems: PF.systems, focus: PF.focus, products: products || "" };
+  const btn = el("pfSubmit"); const old = btn.textContent;
+  btn.disabled = true; btn.textContent = "登记中…";
+  const payload = JSON.stringify({ stage: "lead", vid: getVid(), run: S.run || "", ua: navigator.userAgent.slice(0,200), referrer: (document.referrer||"").slice(0,150),
+    contact: { name: name, phone: phone, company: company, role: PF.role, sector: PF.sector, industry: industry, scale: PF.scale, business: products || PF.focus, need: "" }, profile: profile });
+  /* 登记不卡流程：送达最好；网络不稳就先暂存，后台自动补交，用户照常往下闯 */
+  const confirmed = await postReliable(payload, "lead");
+  btn.disabled = false; btn.textContent = old;
+  if(!confirmed) toast("网络有点慢，登记信息已暂存，会自动补交");
+  try{ localStorage.setItem("aizhi_lead_ok", "1"); localStorage.setItem(PROFILE_KEY, JSON.stringify(profile)); }catch(e){}
+  S.profile = profile; S.phase = "brief"; saveState();
+  hide("profile"); show("brief");
+  prefillBrief();
+}
+/* 难题页：选了环节就给几条常见情况，点一下填入，再按实际改 */
+const PAIN_HINTS = {
+  "质量与检验": ["同类质量问题反复出现，根因一直查不清", "检验主要靠人眼，忙的时候容易漏检", "出了质量问题，追溯到批次和责任人很慢"],
+  "生产与交付": ["订单一变就要重排计划，全靠计划员经验", "交付经常延误，进度要挨个打电话问", "急单插单多，现场顾此失彼"],
+  "设备与运维": ["设备突发故障停机，维修全靠老师傅", "保养计划执行不到位，记录不全", "备件该有的没有，不常用的却囤了一堆"],
+  "销售与获客": ["询盘回复慢，线索跟着跟着就丢了", "新客户开发难，老客户复购情况说不清", "销售经验在个人手里，新人上手慢"],
+  "报价与投标": ["报价要好几天，还容易算错", "标书赶工，资质和业绩材料到处找", "历史报价查不到，同类需求报得不一致"],
+  "售后与客户服务": ["客户报修描述不清，来回沟通好几轮", "售后问题集中在少数人身上，忙不过来", "常见问题没沉淀，同样的问题反复回答"],
+  "采购与供应链": ["供应商比价靠手工整理表格", "缺料和库存积压同时存在，账实对不上", "供应商交期不稳，拖累整体交付"],
+  "研发设计与技术文档": ["图纸和技术资料版本混乱，改了一处别人不知道", "技术文档写得慢、翻译得慢", "研发经验没沉淀，同样的坑反复踩"],
+  "知识沉淀与培训": ["老师傅快退休，经验没留下来", "新人培训全靠师傅带，上手要好几个月", "制度和操作规范有，但执行走样"],
+  "能耗与成本": ["能耗偏高，说不清浪费在哪里", "成本核算靠月底人工汇总，结果滞后", "说不清哪类产品或客户最占用资源"],
+  "安全环保与合规": ["审核前临时补材料，证据不好找", "法规和标准更新跟不上，担心踩红线", "检查发现的问题整改不闭环"],
+  "经营分析与决策": ["报表要人工汇总好几天，看到时已经过时", "各部门数据口径不一，开会先对数", "重要决定主要靠经验拍板，缺少数据支撑"]
+};
+function renderHints(n){
+  const row = el("b" + n + "Hints"), area = el("b" + n + "Area").value, list = PAIN_HINTS[area] || [];
+  row.innerHTML = list.map(t => '<button type="button" class="hintchip">' + esc(t) + '</button>').join("");
+  row.querySelectorAll(".hintchip").forEach((b, i) => {
+    b.onclick = () => {
+      const ta = el("b" + n + "Phen"), cur = (ta.value || "").trim();
+      const prev = Object.values(PAIN_HINTS).some(l => l.indexOf(cur) >= 0);
+      ta.value = (!cur || prev) ? list[i] : (cur + "；" + list[i]).slice(0, 120);
+      try{ ta.focus(); }catch(e){}
+    };
+  });
+}
+[1, 2, 3].forEach(n => { const s = el("b" + n + "Area"); if(s) s.addEventListener("change", () => renderHints(n)); });
+function prefillBrief(){
+  if(!S.profile) return;
+  const f = S.profile.focus;
+  if(AREAS.indexOf(f) >= 0 && !el("b1Area").value){ try{ el("b1Area").value = f; }catch(e){} }
+  [1, 2, 3].forEach(renderHints);
+}
+
+/* ---------- 报上难题 ---------- */
+function collectBrief(){
+  const v = id => (el(id).value || "").trim();
+  const pains = [];
+  if(v("b1Area") && v("b1Phen")) pains.push({ id: "p1", area: v("b1Area"), phenomenon: v("b1Phen"), impact: v("b1Impact"), goal: "" });
+  if(v("b2Area") && v("b2Phen")) pains.push({ id: "p2", area: v("b2Area"), phenomenon: v("b2Phen"), impact: "", goal: "" });
+  if(v("b3Area") && v("b3Phen")) pains.push({ id: "p3", area: v("b3Area"), phenomenon: v("b3Phen"), impact: "", goal: "" });
+  return { pains, constraints: v("bNotes") ? [v("bNotes")] : [] };
+}
+function submitBrief(){
+  const b = collectBrief();
+  const err = el("bfErr");
+  if(!b.pains.some(p => p.id === "p1")){ err.textContent = "请至少填写主痛点的环节和具体情况"; err.style.display = "block"; return; }
+  err.style.display = "none";
+  S.brief = b; saveState();
+  track("brief", { pains: b.pains.map(p => p.area + "|" + p.phenomenon).join("；").slice(0, 300), constraints: (b.constraints || []).join("；").slice(0, 120), pains_raw: b.pains });
+  startQuiz();
+}
+
+/* ---------- 闯关：AI 边出边答（服务端每写完一道合格题即放出，前端轮询增量并入） ---------- */
+function qNum(id){ const m = /^q(\d+)$/.exec(String(id || "")); return m ? parseInt(m[1], 10) : 0; }
+// 并入已放出的题：只接受编号紧接当前末尾的题，保证顺序与编号稳定（已展示的题永不改动）
+function mergeQuestions(list){
+  let added = 0;
+  const have = {};
+  S.questions.forEach(q => { have[q.id] = 1; });
+  (list || []).slice().sort((x, y) => qNum(x.id) - qNum(y.id)).forEach(q => {
+    if(!q || !q.id || !q.stem || have[q.id]) return;
+    if(qNum(q.id) !== S.questions.length + 1 || S.questions.length >= CFG.target) return;
+    S.questions.push(q); have[q.id] = 1; added++;
+  });
+  return added;
+}
+function stageClearOpen(){ return el("stageClear").classList.contains("on"); }
+function onGenProgress(p, j){
+  gen.progress = p || gen.progress;
+  const before = S.questions.length;
+  const added = (j && Array.isArray(j.released)) ? mergeQuestions(j.released) : 0;
+  if(added){
+    saveState();
+    if(S.phase === "quiz"){
+      if(S.cur >= before && !stageClearOpen()){ renderQ(1); return; }   // 正在等下一题 → 立即进入
+      renderSide(); updateNextBtn();
+      el("footHint").textContent = footText();
+      el("qTotal").textContent = qTotalN();
+    }
+  }
+  if(S.phase === "quiz" && S.cur >= S.questions.length) updateWaitStage();
+}
+async function generatePaper(force){
+  if(gen.busy) return;
+  if(!force && S.questions.length && !genRunning()) return;
+  const myToken = APP_TOKEN;
+  gen.busy = true; gen.error = null; gen.t0 = gen.t0 || Date.now();
+  S.genDone = false; saveState();
+  if(S.phase === "quiz" && S.cur >= S.questions.length) renderWaiting();
+  let base = S.genBase || 0;
+  const reqRound = S.round || 0;   // 本轮请求的轮次：0=固定题，1/2/3=三轮追问
+  const reqCount = reqRound === 0 ? FIXED_N : ROUND_N;
+  try{
+    const t0 = Date.now();
+    const requestId = newRunId();   // 本次出题动作的幂等 ID：startJobAndWait 内部网络重试复用同一 ID，后端按 session_id+round+request_id 去重计数
+    const out = await startJobAndWait("/api/generate-questions", () => {
+      base = S.questions.length;
+      const painCov = {};
+      (S.brief && S.brief.pains ? S.brief.pains : []).forEach(p => { painCov[p.id] = 0; });
+      return { profile: aiProfile(S.profile), brief: S.brief, count: reqCount, round: reqRound, start_index: base, total_target: CFG.target,
+        existing_stems: S.questions.map(q => q.stem), answered_summary: buildAnsweredSummary(), pain_coverage: painCov, research_note: S.research_note || null,
+        session_id: S.run || null, request_id: requestId, scoring_version: S.scoringVersion || "" };
+    }, onGenProgress, 600000, S.pendingGen, (jobId) => { S.pendingGen = jobId; S.genBase = base; saveState(); },
+    () => "?from=" + Math.max(0, S.questions.length - base));
+    if(myToken !== APP_TOKEN) return;
+    // 题库回退也不足：合并已发布的部分题，展示「进度已保存」提示 + 恢复/重试按钮
+    if(out && !out.ok && (out.code === "resume_required" || out.code === "support_required")){
+      if(out.research_note) S.research_note = out.research_note;
+      mergeQuestions((out.released || []).filter(q => q && q.id && q.stem));
+      S.pendingGen = null; S.genBase = 0;
+      S.resumeCount = (S.resumeCount || 0) + 1;   // 仅用于显示进度/提示，不参与判定；是否允许恢复以后端返回 code 为准
+      gen.busy = false; gen.progress = null; gen.toppedUp = false; saveState();
+      gen.code = out.code === "support_required" ? "support" : "resume";
+      gen.error = gen.code === "support"
+        ? "进度已保存，请联系我们协助继续诊断"
+        : (out.msg || "进度已保存，暂时无法继续准备问题，请稍后重试");
+      if(S.phase === "quiz" && S.cur >= S.questions.length) renderWaiting();
+      return;
+    }
+    if(out.research_note) S.research_note = out.research_note;
+    if(out.scoring_version) S.scoringVersion = out.scoring_version;   // 保存计分版本，后续出题请求带回供服务端校验
+    const before = S.questions.length;
+    mergeQuestions((out.questions || []).filter(q => q && q.id && q.stem));
+    const target = reqRound === 0 ? FIXED_N : FIXED_N + reqRound * ROUND_N;   // 本轮出满后的累计题数
+    // 本轮没出满：自动续出一次剩余题量（round 不前进，仍出本轮）
+    if(S.questions.length < target && !gen.toppedUp){
+      gen.toppedUp = true; gen.busy = false; S.pendingGen = null; S.genBase = 0; saveState();
+      return generatePaper(true);
+    }
+    if(S.questions.length < target) throw new Error("本轮问题尚未准备齐，进度已保存，请继续测评");
+    if(S.questions.length < FIXED_N) throw new Error("固定题数量不足（" + S.questions.length + " 题），请重试");
+    S.round = Math.min(4, (S.round || 0) + 1);   // 本轮出满，推进到下一轮
+    S.pendingGen = null; S.genBase = 0; S.genDone = true;
+    gen.busy = false; gen.progress = null; gen.toppedUp = false; saveState();
+    track("chunk", { got: S.questions.length, total: S.questions.length, round: reqRound, ms: Date.now() - t0, searched: !!out.searched, questions: S.questions.map(q => ({ id: q.id, stem: String(q.stem || "").slice(0, 90), dimension_name: q.dimension_name || "", measure: q.measure || "" })) });
+    if(S.phase === "quiz" && !stageClearOpen()){
+      if(S.cur >= S.questions.length){ S.cur = Math.max(0, S.questions.length - 1); }
+      if(S.cur >= before || before === 0) renderQ(0);
+      else { renderSide(); updateNextBtn(); el("footHint").textContent = footText(); el("qTotal").textContent = qTotalN(); }
+      if(quizComplete()) finishToReport();
+    }
+  }catch(e){
+    if(myToken !== APP_TOKEN) return;
+    gen.busy = false;
+    // 保留轮次及已答进度，网络故障不得当作整卷已完成。
+    S.genDone = false; gen.progress = null; gen.toppedUp = false; gen.code = "resume"; saveState();
+    gen.error = String((e && e.message) || e);
+    if(S.phase === "quiz" && S.cur >= S.questions.length) renderWaiting();
+  }
+}
+function startQuiz(){
+  S.phase = "quiz"; saveState();
+  hide("profile"); hide("brief"); show("quiz");
+  track("quiz_start", {});
+  if(S.questions.length){ renderQ(0); } else { renderWaiting(); generatePaper(); }
+}
+
+/* ---------- 关卡栏 ---------- */
+function renderStageBar(idx){
+  const st = stageOf(idx);
+  el("sbName").textContent = stageLabel(st);
+  el("progTip").textContent = STAGES[st].d;
+  const nSt = stageCount();
+  el("progBar").style.width = Math.min(100, answeredCount() / qTotalN() * 100) + "%";
+  el("route").querySelectorAll(".rnode").forEach((n, i) => {
+    n.style.display = i < nSt ? "" : "none";
+    const done = (S.cleared || []).indexOf(i) >= 0 || stageDone(i);
+    n.querySelector(".seal").classList.toggle("on", done);
+    n.classList.toggle("cur", i === st && !done);
+  });
+}
+
+/* ---------- 作答界面 ---------- */
+const GEN_STAGES = [
+  { k: "searching", t: "梳理企业情况" },
+  { k: "designing", t: "整理关键问题" },
+  { k: "writing", t: "逐条拟定追问" },
+  { k: "finalizing", t: "核对问题" }
+];
+function stageIndex(st){ if(st === "topup") return 2; if(st === "done") return 4; const i = GEN_STAGES.findIndex(x => x.k === st); return i < 0 ? 0 : i; }
+function profileChips(){
+  const p = S.profile || {}, chips = [];
+  [p.company, industryLabel(p), p.mode, p.scale, p.systems].forEach(v => { if(v) chips.push(v); });
+  if(p.focus) chips.push("优先：" + p.focus);
+  ((S.brief && S.brief.pains) || []).forEach(x => { if(x.phenomenon || x.area) chips.push("主痛点：" + (x.phenomenon || x.area)); });
+  return chips.map(c => '<span>' + esc(String(c).slice(0, 18)) + '</span>').join("");
+}
+function updateWaitStage(){
+  const box = el("waitSteps"); if(!box) return;
+  const p = gen.progress || { stage: (S.research_note || S.questions.length) ? "designing" : "searching", ready: S.questions.length, target: CFG.target };
+  const cur = stageIndex(p.stage);
+  const ready = Math.max(S.questions.length, (S.genBase || 0) + (p.ready || 0));
+  box.innerHTML = GEN_STAGES.map((st, i) => {
+    const cls = i < cur ? "done" : i === cur ? "on" : "";
+    const label = st.k === "writing" ? (st.t + " " + ready + "/" + CFG.target) : st.t;
+    return '<div class="gstep ' + cls + '"><i>' + (i < cur ? "✓" : (i + 1)) + '</i><span>' + esc(label) + '</span></div>';
+  }).join("");
+  const sec = el("waitSec"); if(sec && gen.t0) sec.textContent = "已用时 " + Math.round((Date.now() - gen.t0) / 1000) + " 秒";
+}
+function waitLine(){
+  const n = S.questions.length + 1;
+  // 前 12 道固定题即刻放出，第 13 题是第一道定制题，出题官要先思考一轮，等得最久
+  return n === 13
+    ? "AI 助手正在结合前面的回答定制后续追问，第 " + n + " 题一般二三十秒内就绪，已答内容都已保存"
+    : "第 " + n + " 题正在生成，通常几秒内就绪";
+}
+let waitTimer = null;
+function renderWaiting(){
+  const catchUp = S.questions.length > 0;
+  el("qDim").textContent = catchUp ? "下一道追问生成中" : "AI 助手整理中";
+  el("qOpts").innerHTML = "";
+  el("qNow").textContent = String(S.questions.length + 1);
+  el("qTotal").textContent = qTotalN();
+  renderStageBar(S.questions.length);
+  el("footHint").textContent = catchUp ? footText() : "首批题目就绪后自动开始";
+  el("btnBack").disabled = !(catchUp && S.cur > 0);
+  el("btnNext").disabled = true;
+  el("btnNext").textContent = "下一题";
+  const t = el("qText");
+  if(gen.error){
+    const btnLabel = gen.code === "support" ? "联系我们" : (catchUp ? "继续诊断" : "重试出题");
+    t.innerHTML = '<div class="waitbox"><p class="we">' + esc(gen.error) + '</p>'
+      + '<p class="ws">' + (catchUp ? "已作答的 " + answeredCount() + " 题不会丢失" : "已填信息不会丢失") + '</p>'
+      + '<button class="mini" style="margin-top:14px" onclick="' + (gen.code === "support" ? 'contactDiagnosisSupport()' : 'generatePaper(true)') + '">' + btnLabel + '</button></div>';
+  } else if(catchUp){
+    t.innerHTML = '<div class="waitbox"><div class="spinner"></div>'
+      + '<p class="ws" style="margin-top:12px">' + waitLine() + '</p>'
+      + '<div class="gsteps" id="waitSteps"></div><p class="rk" id="waitSec"></p></div>';
+  } else {
+    t.innerHTML = '<div class="waitbox">'
+      + '<p class="wt">AI 助手正在围绕主痛点定制追问</p>'
+      + '<p class="ws">基础题已完成，正在根据作答和主痛点准备后续问题</p>'
+      + '<div class="gchips">' + profileChips() + '</div>'
+      + '<div class="gsteps" id="waitSteps"></div>'
+      + '<p class="rk" id="waitSec"></p></div>';
+  }
+  updateWaitStage();
+  if(waitTimer) clearInterval(waitTimer);
+  waitTimer = setInterval(() => { if(!el("waitSteps")){ clearInterval(waitTimer); waitTimer = null; return; } updateWaitStage(); }, 1000);
+}
+function footText(){ return "已答 " + answeredCount() + "/" + qTotalN() + (genRunning() ? "，已出 " + S.questions.length + " 题" : ""); }
+function renderQ(dir){
+  if(!S.questions.length || S.cur >= S.questions.length){ renderWaiting(); return; }
+  const q = S.questions[S.cur];
+  el("qNow").textContent = (S.cur + 1);
+  el("qTotal").textContent = qTotalN();
+  renderStageBar(S.cur);
+  el("qDim").textContent = q.dimension_name || q.dimension || "";
+  el("qText").textContent = q.stem || "";
+  buildOptions(q);
+  el("btnBack").disabled = S.cur === 0;
+  updateNextBtn();
+  renderSide();
+  el("footHint").textContent = footText();
+  try{ window.scrollTo(0,0); }catch(e){}
+}
+function buildOptions(q){
+  const list = el("qOpts"); list.innerHTML = "";
+  (q.options || []).forEach(o => {
+    const row = document.createElement("div");
+    const on = S.answers[q.id] === o.key;
+    row.className = "rate-row" + (on ? " sel" : "");
+    row.setAttribute("role", "radio"); row.setAttribute("tabindex", "0"); row.setAttribute("aria-checked", on ? "true" : "false");
+    const badge = document.createElement("span"); badge.className = "rr-badge"; badge.textContent = o.key;
+    const mean = document.createElement("span"); mean.className = "rr-mean"; mean.textContent = o.text;
+    row.appendChild(badge); row.appendChild(mean);
+    row.onclick = () => pick(q.id, o.key);
+    row.onkeydown = (e) => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); pick(q.id, o.key); } };
+    list.appendChild(row);
+  });
+}
+// 前进一题：题已出则进入；整卷答完去结算；题还在生成则进入追赶态
+function advance(){
+  if(!S.questions.length) return;
+  if(S.cur < S.questions.length - 1){ S.cur++; saveState(); renderQ(1); return; }
+  if(genRunning()){ S.cur = S.questions.length; saveState(); renderWaiting(); return; }
+  const fu = firstUnanswered();
+  if(fu < S.questions.length){ S.cur = fu; saveState(); renderQ(1); return; }
+  if(quizComplete()){ finishToReport(); return; }
+  // 已出题目全部答完，但还有下一轮没出 → 触发下一轮出题
+  S.cur = S.questions.length; saveState(); renderWaiting();
+  generatePaper(true);
+}
+let pickTimer = null;
+function pick(qid, key){
+  S.answers[qid] = key; saveState();
+  const q = S.questions[S.cur];
+  if(q && q.id === qid){
+    [...el("qOpts").children].forEach((row, i) => { const on = (q.options || [])[i] && (q.options || [])[i].key === key; row.classList.toggle("sel", !!on); row.setAttribute("aria-checked", on ? "true" : "false"); });
+  }
+  updateNextBtn(); renderSide();
+  if(pickTimer) clearTimeout(pickTimer);
+  pickTimer = setTimeout(() => {
+    pickTimer = null;
+    if(!S.questions.length) return;
+    if(maybeStageClear(S.cur)) return;
+    advance();
+  }, 400);
+}
+function updateNextBtn(){
+  const q = S.questions[S.cur];
+  const answered = q && S.answers[q.id] !== undefined;
+  const btn = el("btnNext");
+  const lastQ = S.questions.length > 0 && S.cur >= S.questions.length - 1 && !genRunning();
+  btn.disabled = !answered;
+  btn.textContent = lastQ ? (quizComplete() ? "完成答题，查看报告" : "已是最后一题") : "下一题";
+}
+function nextQ(){
+  if(pickTimer){ clearTimeout(pickTimer); pickTimer = null; }
+  if(!S.questions.length || S.cur >= S.questions.length){ renderWaiting(); return; }
+  const q = S.questions[S.cur];
+  if(S.answers[q.id] === undefined){ toast("请先选择本题答案"); return; }
+  if(maybeStageClear(S.cur)) return;
+  advance();
+}
+function prevQ(){
+  if(pickTimer){ clearTimeout(pickTimer); pickTimer = null; }
+  if(S.cur > 0){ S.cur = Math.min(S.cur - 1, S.questions.length - 1); saveState(); renderQ(-1); }
+}
+/* 滑动切换（含顺序门禁） */
+(function(){
+  let ts = null;
+  const quizEl = el("quiz");
+  quizEl.addEventListener("touchstart", e => {
+    if(e.touches.length !== 1 || el("confirmBox").classList.contains("on") || stageClearOpen()) return;
+    const t = e.touches[0]; ts = { x: t.clientX, y: t.clientY, t: Date.now() };
+  }, { passive: true });
+  quizEl.addEventListener("touchend", e => {
+    if(!ts) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - ts.x, dy = t.clientY - ts.y, dt = Date.now() - ts.t;
+    ts = null;
+    if(Math.abs(dx) > 60 && Math.abs(dy) < 50 && dt < 600){
+      if(dx < 0){
+        if(!S.questions.length || S.cur >= S.questions.length) return;
+        if(S.answers[S.questions[S.cur].id] === undefined){ toast("请先为本题选择答案，再进入下一题"); return; }
+        const firstUn = firstUnanswered();
+        if(S.cur + 1 > firstUn){ toast("请按顺序作答：先完成第 " + (firstUn + 1) + " 题"); return; }
+        if(pickTimer){ clearTimeout(pickTimer); pickTimer = null; }
+        if(maybeStageClear(S.cur)) return;
+        advance();
+      } else { prevQ(); }
+    }
+  }, { passive: true });
+})();
+
+/* ---------- 过关：每关只盖一次印；奖励只看「答完」与「照实」，不看答得好坏 ---------- */
+function maybeStageClear(idx){
+  if((idx + 1) % PER !== 0) return false;
+  const st = Math.floor(idx / PER);
+  if(st >= stageCount() - 1) return false;            // 最后一关答完直接结算
+  if(!Array.isArray(S.cleared)) S.cleared = [];
+  if(S.cleared.indexOf(st) >= 0 || !stageDone(st)) return false;
+  S.cleared.push(st); saveState();
+  showStageClear(st);
+  return true;
+}
+function showStageClear(st){
+  const qs = S.questions.slice(st * PER, st * PER + PER);
+  const unk = qs.filter(q => isUnknownOpt((q.options || []).find(x => x.key === S.answers[q.id]))).length;
+  const seal = el("scSeal");
+  seal.innerHTML = esc(STAGES[st].n) + "<br>完成";
+  seal.classList.remove("stamp-in"); void seal.offsetWidth; seal.classList.add("stamp-in");
+  el("scTitle").textContent = "第" + CN[st] + "关，完成";
+  el("scText").textContent = unk ? ("本关 " + qs.length + " 题已答完，其中 " + unk + " 题选了「说不清」。说不清的地方，往往正是最该查清的地方。")
+    : "本关 " + qs.length + " 题已答完，每一题都给了明确答案。";
+  el("scMini").innerHTML = STAGES.slice(0, stageCount()).map((s, i) => '<span class="seal' + (i <= st ? ' on' : '') + '">' + esc(s.n) + '</span>').join("");
+  el("scNext").innerHTML = "下一关是<b>" + esc(stageLabel(st + 1)) + "</b>：" + esc(STAGES[st + 1].d);
+  el("scGo").textContent = "进入" + stageLabel(st + 1);
+  el("stageClear").classList.add("on");
+  setTimeout(() => { try{ el("scGo").focus({ preventScroll: true }); }catch(e){} }, 60);
+}
+function continueAfterClear(){
+  el("stageClear").classList.remove("on");
+  advance();
+}
+
+/* ---------- 答题格（按关分组） ---------- */
+let sideVisible = false;
+function toggleSide(){
+  sideVisible = !sideVisible;
+  el("sidePanel").style.display = sideVisible ? "flex" : "none";
+  el("sideMask").style.display = sideVisible ? "block" : "none";
+  if(sideVisible) renderSide();
+}
+function hideSide(){ sideVisible = false; el("sidePanel").style.display = "none"; el("sideMask").style.display = "none"; }
+function renderSide(){
+  const grid = el("qGrid"); if(!grid) return;
+  grid.innerHTML = "";
+  const firstUn = firstUnanswered();
+  for(let st = 0; st < stageCount() && st * PER < S.questions.length; st++){
+    const h = document.createElement("div"); h.className = "sgrp"; h.textContent = stageLabel(st) + (stageDone(st) ? "（已过）" : "");
+    const box = document.createElement("div"); box.className = "scells";
+    S.questions.slice(st * PER, st * PER + PER).forEach((q, k) => {
+      const i = st * PER + k;
+      const cell = document.createElement("div");
+      const done = S.answers[q.id] !== undefined;
+      const unlocked = done || i <= firstUn;
+      cell.className = "scell " + (done ? "done" : "todo") + (i === S.cur ? " cur" : "") + (unlocked ? "" : " locked");
+      cell.textContent = i + 1;
+      cell.onclick = () => jumpTo(i);
+      box.appendChild(cell);
+    });
+    grid.appendChild(h); grid.appendChild(box);
+  }
+  el("spDone").textContent = answeredCount();
+  el("spTotal").textContent = qTotalN();
+  el("railCount").textContent = answeredCount() + "/" + qTotalN();
+  el("spFinish").disabled = !quizComplete();
+  renderEvidence();
+}
+function renderEvidence(){
+  const box = el("evidenceBox"); if(!box) return;
+  const ev = collectEvidence();
+  if(!ev.length){ box.style.display = "none"; box.innerHTML = ""; return; }
+  box.style.display = "";
+  box.innerHTML = '<div class="ev-cap">作答依据</div>'
+    + ev.map(e => '<div class="evcard"><b>' + esc(e.label) + '</b><span>' + esc(e.text) + '</span></div>').join("");
+}
+function jumpTo(i){
+  if(i < 0 || i >= S.questions.length) return;
+  if(pickTimer){ clearTimeout(pickTimer); pickTimer = null; }
+  const answered = S.answers[S.questions[i].id] !== undefined;
+  const firstUn = firstUnanswered();
+  if(!answered && i > firstUn){ toast("请按顺序作答：先完成第 " + (firstUn + 1) + " 题"); i = firstUn; }
+  const review = S.answers[S.questions[i].id] !== undefined;
+  S.cur = i; saveState(); renderQ(1);
+  if(window.innerWidth < 760) hideSide();
+  if(review) toast("正在回看第 " + (i + 1) + " 题，可直接修改答案");
+}
+function finishNow(){
+  hideSide();
+  if(quizComplete()){ finishToReport(); return; }
+  const fu = firstUnanswered();
+  if(fu < S.questions.length){ S.cur = fu; renderQ(1); }
+  toast(genRunning() ? "剩余题目仍在生成，请稍候继续作答" : "还有题目未完成");
+}
+
+/* ---------- 结算：文牒（段位）→ 企业类型 → 分享 → 诊断书 ---------- */
+function renderReportShell(){ el("reportBody").innerHTML = '<div id="rankCard"></div><div id="typeCard"></div><div id="shareCard"></div><div id="fullReport"></div>'; }
+function levelIndex(code){ return LEVELS.findIndex(l => l[0] === code); }
+// 段位来源：诊断书到了用诊断书；之前用即时计分（两者同一口径，服务端定级，不会不一致）
+function rankRd(){ return (S.report && S.report.readiness) || S.rank || {}; }
+function rankRep(){ return (S.report && S.report.readiness) ? S.report : (S.rank ? { readiness: S.rank } : null); }
+function renderRank(rep, animate){
+  const rc = el("rankCard"); if(!rc) return;
+  const rd = rep ? (rep.readiness || {}) : null;
+  const li = rd ? levelIndex(rd.level) : -1;
+  const nSt = stageCount(), passed = stagesName(nSt) + "已过";
+  const seals = STAGES.slice(0, nSt).map(s => '<span class="seal on">' + esc(s.n) + '</span>').join("");
+  let sealH, sideH;
+  if(rd && li >= 0){
+    sealH = '<div class="rankseal' + (animate ? ' stamp-in' : '') + '"><div class="lvl"><span class="b">' + clean(rd.level, 4) + '</span><span class="n">' + clean(rd.name || LEVELS[li][1], 6) + '</span></div></div>';
+    sideH = '<p class="t">贵司的 AI 段位</p><p class="big">第 ' + (li + 1) + ' 段，共 5 段</p>'
+      + '<div class="ladder" aria-hidden="true">' + LEVELS.map((l, i) => '<span' + (i <= li ? ' class="on"' : '') + '></span>').join("") + '</div>'
+      + '<p class="s">由低到高：机制缺失、局部做法、机制初具、机制稳定、机制成熟</p>';
+  } else if(rd){
+    // 覆盖率不足六成：服务端明确未出段位（level 为 null），区别于「评定中」（level 缺字段）
+    const noTier = rd.level === null || rd.level === "";
+    sealH = '<div class="rankseal pending"><div class="lvl"><span class="b">' + clean(rd.level || "—", 4) + '</span><span class="n">' + clean(rd.name || "待定", 6) + '</span></div></div>';
+    sideH = '<p class="t">贵司的 AI 段位</p><p class="big">' + (noTier ? "补答后可查看段位" : clean(rd.name || "已评定", 8)) + '</p>'
+      + (noTier ? '<p class="s">有效作答覆盖率不足六成，段位暂未评定；补齐关键题目后可查看</p>' : '');
+  } else {
+    sealH = '<div class="rankseal pending">段位<br>评定中</div>';
+    sideH = '<p class="t">' + passed + '</p><p class="big">正在评定段位</p><p class="s">AI 助手正在研读 ' + S.questions.length + ' 题作答，评定后盖印</p>';
+  }
+  rc.innerHTML = '<div class="rcard passport rank"><div class="pp-head"><b>通关文牒</b><span>' + passed + '</span></div>'
+    + '<div class="rk-seals">' + seals + '</div>'
+    + '<div class="rk-main">' + sealH + '<div class="rk-side">' + sideH + '</div></div>'
+    + '<div class="peer" id="peerLine" style="display:none"></div></div>';
+  renderPeer();
+}
+function renderPeer(){
+  const n = el("peerLine"); if(!n) return;
+  const rk = S.peer;
+  if(!rk || typeof rk.beat !== "number"){ n.style.display = "none"; n.innerHTML = ""; return; }
+  n.innerHTML = '超过 <b>' + rk.beat + '%</b> 已检测的' + esc(rk.scope === "industry" && rk.industry ? rk.industry : "") + '企业'
+    + '<span class="rk">样本 ' + rk.n + ' 家，同一计分口径，每家只计最近一次</span>';
+  n.style.display = "block";
+}
+// 同行对比只用服务端真实记录；样本不足时服务端返回 rank=null，前端不显示任何比例
+async function fetchPeer(){
+  if(typeof S.percent !== "number") return;
+  try{
+    const q = "?p=" + encodeURIComponent(S.percent) + "&industry=" + encodeURIComponent((S.profile || {}).sector || (S.profile || {}).industry || "") + "&vid=" + encodeURIComponent(getVid());
+    const r = await fetchWithTimeout("/api/peer" + q, {}, 10000);
+    const j = await r.json();
+    S.peer = (j && j.ok && j.rank) ? j.rank : null; saveState();
+    renderPeer();
+  }catch(e){}
+}
+function renderShare(){
+  const n = el("shareCard"); if(!n) return;
+  const ready = !!rankRd().level;
+  n.innerHTML = '<div class="rcard share"><p class="sh-t">把结果亮给同行</p>'
+    + '<p class="sh-d">海报上只有段位和企业类型，不含公司名和具体问题。</p>'
+    + '<div class="sh-row"><button class="shbtn main" id="posterBtn" onclick="makePoster()"' + (ready ? '' : ' disabled') + '>生成测评海报</button>'
+    + '<button class="shbtn" id="inviteBtn" onclick="invitePeer()">邀请同行来测</button></div></div>';
+}
+function updateQuickHint(p){ const n = el("quickHint"); if(n && p) n.textContent = fmtChars(p.chars); }
+function renderTypeCard(t){
+  const tc = el("typeCard"); if(!tc || !t) return;
+  const axes = (t.axes || []).map(a => '<span>' + esc((a.letter || '') + ' ' + (a.name || '')) + '</span>').join('');
+  tc.innerHTML = '<div class="rcard tcard"><div class="cap">贵司的企业类型</div>'
+    + '<div class="tletters">' + String(t.code || '').split('').map(ch => '<span>' + esc(ch) + '</span>').join('') + '</div>'
+    + '<div class="tname">' + esc(t.name || '') + '</div>'
+    + (t.one_liner ? '<p class="tone">' + esc(t.one_liner) + '</p>' : '')
+    + (axes ? '<div class="taxes">' + axes + '</div>' : '')
+    + (t.basis ? '<p class="rk">' + esc(t.basis) + '</p>' : '')
+    + (t.pending ? '<p class="rk" id="quickHint">AI 正在根据作答写这类企业的一句话画像…</p>' : '')
+    + '</div>';
+}
+async function runQuick(){
+  const tc = el("typeCard"); if(!tc || assess.quickBusy) return;
+  if(S.quickType){ renderTypeCard(S.quickType); return; }
+  const myToken = APP_TOKEN;
+  assess.quickBusy = true;
+  if(S.typePre) renderTypeCard(S.typePre);   // 字母已由经营风格题确定：先亮类型卡，画像随后补上
+  else tc.innerHTML = '<div class="rcard tcard"><div class="cap">贵司的企业类型</div>'
+    + '<div class="waitbox"><div class="spinner"></div>'
+    + '<p class="waitp">AI 正在识别贵司的企业类型…<br>约需 20-60 秒；诊断书在下方同步生成</p>'
+    + '<p id="quickHint" class="rk"></p></div></div>';
+  try{
+    const out = await startJobAndWait("/api/quick-type", {
+      profile: aiProfile(S.profile), brief: S.brief, questions: S.questions, session_id:S.run || "", force: false,
+      answers: S.questions.map(q => ({ id: q.id, key: S.answers[q.id] }))
+    }, updateQuickHint, 300000, S.pendingQuick, (jobId) => { S.pendingQuick = jobId; saveState(); });
+    if(myToken !== APP_TOKEN) return;
+    const t = out.result || out.report || null;
+    if(!t || !t.code) throw new Error("类型判定为空");
+    S.pendingQuick = null;
+    S.quickType = t; saveState();
+    assess.quickBusy = false;
+    renderTypeCard(t);
+    track("quick_type", { code: t.code, name: t.name, one_liner: t.one_liner || "", axes: t.axes || null });
+  }catch(e){
+    if(myToken !== APP_TOKEN) return;
+    assess.quickBusy = false;
+    // 字母已确定时快评失败也不出错误卡：保留类型卡，只是没有一句话画像
+    if(S.typePre){ const t = Object.assign({}, S.typePre, { pending: false, basis: "四个字母由经营风格题的作答直接确定" }); S.quickType = t; S.pendingQuick = null; saveState(); renderTypeCard(t); return; }
+    tc.innerHTML = '<div class="rcard tcard"><div class="cap">贵司的企业类型</div>'
+      + '<p class="waitp">类型判定暂不可用，不影响下方诊断书。</p>'
+      + '<div style="text-align:center;margin-top:10px"><button class="mini" onclick="retryQuick()">重试类型判定</button></div></div>';
+  }
+}
+function retryQuick(){ assess.quickBusy = false; runQuick(); }
+
+// 交卷即刻计分（服务端纯计算，一两秒）：段位印、同行对比、类型字母先亮出来，诊断书随后到
+async function instantScore(myToken){
+  if(S.rank && typeof S.percent === "number") return;
+  try{
+    const r = await fetchWithTimeout("/api/score", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ questions: S.questions, answers: S.questions.map(q => ({ id: q.id, key: S.answers[q.id] })) }) }, 10000);
+    const j = await r.json();
+    if(myToken !== APP_TOKEN || !j || !j.ok || !j.computed) return;
+    S.rank = { level: j.computed.level, name: j.computed.level_name, confidence: j.computed.confidence };
+    if(typeof j.computed.raw_percent === "number") S.percent = j.computed.raw_percent;
+    if(j.type && j.type.code && !S.quickType) S.typePre = j.type;
+    saveState();
+    if(S.phase !== "report") return;
+    renderRank(rankRep(), true);
+    renderShare();
+    fetchPeer();
+  }catch(e){}   // 即时计分失败不影响：段位随诊断书一起出
+}
+async function finishToReport(refresh){
+  if(assess.busy || (!refresh && !quizComplete())) return;
+  const previousReport = S.report;
+  if(refresh) S.pendingAssess = null;
+  const myToken = APP_TOKEN;
+  hideSide(); el("stageClear").classList.remove("on");
+  S.phase = "report"; S.report = null; S.cleared = STAGES.slice(0, stageCount()).map((x, i) => i); saveState();
+  hide("quiz"); show("report");
+  renderReportShell();
+  renderRank(rankRep(), false);
+  renderShare();
+  assess.busy = true; assess.error = null;
+  renderAssessLoading();
+  await instantScore(myToken);
+  if(myToken !== APP_TOKEN) return;
+  runQuick();
+  try{
+    const t0 = Date.now();
+    const out = await startJobAndWait("/api/assess", {
+      profile: aiProfile(S.profile), brief: S.brief, questions: S.questions,
+      answers: S.questions.map(q => ({ id: q.id, key: S.answers[q.id] }))
+    }, updateAssessHint, 1500000, S.pendingAssess, (jobId) => { S.pendingAssess = jobId; saveState(); });
+    if(myToken !== APP_TOKEN) return;
+    if(!out.ok) throw new Error(out.msg || "检测失败");
+    assess.busy = false;
+    assess.report = out.report;
+    S.report = out.report; S.pendingAssess = null;
+    if(out.report.enterprise_type && !S.quickType){ S.typePre = out.report.enterprise_type; renderTypeCard(S.typePre); }
+    S.percent = (out.computed && typeof out.computed.raw_percent === "number") ? out.computed.raw_percent : null;
+    saveState();
+    const dims = {};
+    (out.report.dimensions || []).forEach(d => { dims[d.name || d.dimension] = d.score + "/" + d.max; });
+    track("report", {
+      level: (out.report.readiness || {}).level || "",
+      rate: S.percent,
+      scoring_version: (out.computed && out.computed.scoring_version) || "",
+      peer_rfp: (out.peer && out.peer.rfp) || "", peer_sig: (out.peer && out.peer.sig) || "",
+      grasp: (out.computed && typeof out.computed.grasp === "number") ? out.computed.grasp : null,
+      confidence: (out.report.readiness || {}).confidence || "",
+      dims: dims,
+      answers: S.questions.map(q => { const o = (q.options || []).find(x => x.key === S.answers[q.id]); return { id: q.id, title: ((q.dimension_name || "") + " · " + String(q.stem || "").slice(0, 26)), answer: o ? o.text : "" }; }),
+      problems: (out.report.problems || []).slice(0, 5).map(p => ({ title: String(p.title || ""), severity: p.severity || "" })),
+      deep_dive: (out.report.deep_dive || []).map(d => String(d.topic || "")).slice(0, 3)
+    });
+    track("ai_report", { ai_report: JSON.stringify(out.report).slice(0, 20000), model: out.model });
+    renderRank(out.report, !S.rank);
+    renderShare();
+    renderReport(out.report);
+    window.scrollTo(0, 0);
+    fetchPeer();
+  }catch(e){
+    if(myToken !== APP_TOKEN) return;
+    assess.busy = false; assess.error = String((e && e.message) || e);
+    if(refresh && previousReport){ S.report = previousReport; saveState(); renderReport(previousReport); toast("更新暂未完成，原报告已保留"); }
+    else renderAssessError();
+  }
+}
+function renderAssessLoading(){
+  (el("fullReport") || el("reportBody")).innerHTML = '<div class="rcard rsheet"><div class="cap">企业问题诊断书</div>'
+    + '<div class="waitbox"><div class="spinner"></div>'
+    + '<p class="ws" style="margin-top:14px">AI 助手正在整理回答、核算口径、撰写诊断报告…<br>约需 1-3 分钟，完成后自动展示并保存在本机</p>'
+    + '<p id="assessHint" class="rk"></p></div></div>';
+}
+function renderAssessError(){
+  (el("fullReport") || el("reportBody")).innerHTML = '<div class="rcard rsheet"><div class="cap">企业问题诊断书</div>'
+    + '<div class="waitbox"><p class="we">诊断书生成被中断：' + esc(assess.error) + '</p>'
+    + '<p class="ws">作答已完整保存；点重试会接着等待生成，不用重新作答。</p>'
+    + '<button class="mini" style="margin-top:14px" onclick="retryAssess()">重试生成诊断书</button></div></div>';
+}
+function retryAssess(){ assess.busy = false; assess.error = null; finishToReport(); }
+function qLabel(qid){ const m = /^q(\d+)$/.exec(String(qid || "")); return m ? ("第 " + m[1] + " 题") : String(qid || ""); }
+function qLabels(ids){ return (ids || []).map(qLabel).join("、"); }
+// 证据墙：把问题的依据题号串成「固定题依据→ 动态题依据→ 结论」推导链
+function evidenceChain(ids){
+  const items = [];
+  (ids || []).forEach(qid => {
+    const m = /^q(\d+)$/.exec(String(qid));
+    if(!m) return;
+    const idx = parseInt(m[1], 10) - 1;
+    const q = S.questions[idx];
+    if(!q) return;
+    const key = S.answers[q.id];
+    const isFixed = idx < 12;
+    let desc = "";
+    if(isFixed && q.fixed_id && EVIDENCE_MAP[q.fixed_id] && EVIDENCE_MAP[q.fixed_id][key]){
+      desc = EVIDENCE_MAP[q.fixed_id][key];
+    } else {
+      desc = String(q.stem || q.text || "").replace(/\s+/g, " ").replace(/[「」"“”]/g, "");
+      if(desc.length > 26) desc = desc.slice(0, 25) + "…";
+    }
+    items.push({ isFixed, n: idx + 1, desc });
+  });
+  return items;
+}
+function renderEvidenceWall(ids){
+  const items = evidenceChain(ids);
+  if(!items.length) return '';
+  const fx = items.filter(x => x.isFixed), dy = items.filter(x => !x.isFixed);
+  let seg = '';
+  if(fx.length) seg += '<div class="wall-grp"><span class="wall-tag ev">固定题</span>' + fx.map(x => '<span class="wall-item">第' + x.n + '题·' + esc(x.desc) + '</span>').join('') + '</div>';
+  if(dy.length){
+    if(seg) seg += '<span class="wall-arrow">→</span>';
+    seg += '<div class="wall-grp"><span class="wall-tag clue">追问</span>' + dy.map(x => '<span class="wall-item">第' + x.n + '题·' + esc(x.desc) + '</span>').join('') + '</div>';
+  }
+  if(!seg) return '';
+  return '<div class="evwall">' + seg + '</div>';
+}
+// 展示前兜底清洗：单行、去 markdown 与异常符号（旧档案或模型偶发脏字符也不会破版）
+function clean(t, max){
+  let v = String(t == null ? "" : t).replace(/[\r\n\t\u2028\u2029]+/g, " ").replace(/```|\*\*|__|[*#`>|~]/g, "").replace(/"([^"]*)"/g, "「$1」").replace(/"/g, "").replace(/\s{2,}/g, " ").trim();
+  if(max && v.length > max) v = v.slice(0, max - 1) + "…";
+  return esc(v);
+}
+const SEV = { high: ["hi", "高"], medium: ["md", "中"], low: ["lo", "低"] };
+function renderReport(rep){
+  const rd = rep.readiness || {};
+  const ds = rep.data_sufficiency || {};
+  // 旧版报告（v2.x）兼容：gaps → problems，verify_on_site → deep_dive
+  const problems = Array.isArray(rep.problems) && rep.problems.length ? rep.problems
+    : (rep.gaps || []).map(g => ({ title: g.title, detail: g.impact, severity: g.severity, basis_qids: g.basis_qids }));
+  const deep = Array.isArray(rep.deep_dive) && rep.deep_dive.length ? rep.deep_dive
+    : (rep.verify_on_site || []).slice(0, 3).map(v => ({ topic: v, why: "" }));
+  const strengths = (rep.strengths || []).slice(0, 2);
+  let h = '<div class="rcard rsheet"><div class="cap">企业问题诊断书</div>'
+    + '<p class="rsum">' + clean(rep.summary, 120) + '</p>'
+    + (rd.rationale ? '<p class="rsub">' + clean(rd.rationale, 100) + '</p>' : '')
+    + '<div class="rkpi"><span>发现问题 ' + problems.length + ' 项</span><span>作答 ' + (ds.answered || 0) + '/' + (ds.total || 0) + ' 题</span>'
+    + (typeof ds.grasp === "number" ? '<span>掌握度 ' + ds.grasp + '%</span>' : '')
+    + '<span>置信度 ' + (rd.confidence === "high" ? "高" : rd.confidence === "low" ? "低" : "中") + '</span></div>'
+    + '<p class="rnote">本结果基于企业自评问卷，未经现场核实' + ((ds.unknown_count || 0) > 0 ? '；其中 ' + ds.unknown_count + ' 题选了「说不清」，未计分、已计入覆盖率' : '') + (typeof ds.coverage === "number" && ds.coverage < 60 ? '；有效作答覆盖率不足六成，段位暂未评定' : '') + (ds.ai_capped ? '；AI 使用情况用于改进建议，段位按固定题原始得分判定' : '') + '。</p>';
+  h += '<div class="rblock"><button class="mini" onclick="downloadDeliverable()">下载诊断报告</button></div>';
+  const painResponse = rep.primary_pain_response;
+  if(painResponse){
+    h += '<div class="rblock"><div class="rsec">主痛点分析与改善建议</div>'
+      + '<p class="rsum">' + clean(painResponse.topic, 120) + '</p>'
+      + '<p class="pd">' + clean(painResponse.analysis, 300) + '</p>';
+    (painResponse.causes || []).forEach(c => {
+      h += '<div class="pbox" style="margin-top:16px"><div class="pt">可能原因：' + clean(c.title, 40) + '</div><p class="pd">' + clean(c.detail, 200) + '</p>' + renderEvidenceWall(c.basis_qids || []) + '</div>';
+    });
+    h += '<div class="rsec" style="margin-top:20px">具体改善建议</div>';
+    (painResponse.actions || []).forEach((a,i) => {
+      h += '<div class="pbox sbox"><div class="pt">' + (i+1) + '．' + clean(a.title,40) + '</div>'
+        + '<p class="pd">' + clean(a.action,200) + '</p>'
+        + '<p class="pq">建议负责人：' + clean(a.owner,40) + '</p>'
+        + '<p class="pq">检查是否改善：' + clean(a.metric,100) + '</p></div>';
+    });
+    h += '<div class="rsec" style="margin-top:20px">AI 可以帮什么</div><p class="pd">' + clean(painResponse.ai_application, 240) + '</p></div>';
+  }
+  if(!painResponse){
+    h += '<div class="rblock"><div class="rsec">主痛点分析与改善建议</div><p class="pd">' + clean((((S.brief || {}).pains || [])[0] || {}).phenomenon,120) + '</p><p class="pd">正在整理主痛点分析…</p></div>';
+    ensurePrimaryPain(rep);
+  }
+  if(problems.length){
+    h += '<div class="rblock"><div class="rsec">贵司当前存在的 AI 问题</div>';
+    problems.slice(0, 5).forEach(p => {
+      const sv = SEV[p.severity] || SEV.medium;
+      h += '<div class="pbox ' + sv[0] + '"><div class="pt"><span class="tag ' + sv[0] + '">' + sv[1] + '</span><span>' + clean(p.title, 24) + '</span></div>'
+        + (p.detail ? '<p class="pd">' + clean(p.detail, 80) + '</p>' : '')
+        + renderEvidenceWall(p.basis_qids)
+        + '</div>';
+    });
+    h += '</div>';
+  }
+  // 爱智能力参考：只列能力，不报价不承诺
+  const refs = rep.aizhi_refs && Array.isArray(rep.aizhi_refs.items) ? rep.aizhi_refs.items : [];
+  if(refs.length){
+    h += '<div class="rblock"><div class="rsec">爱智能力参考</div>'
+      + '<p class="refsrc">针对上述问题，以下能力参考来自' + esc(rep.aizhi_refs.source || '西门子 Xcelerator 工业生态平台上架的爱智 AI 产品') + '，可在西门子 Xcelerator 平台了解详情。</p>';
+    refs.forEach(r0 => {
+      h += '<div class="refitem"><span class="reflink">智</span><div>'
+        + '<div class="refname">' + clean(r0.product, 30) + '</div>'
+        + '<div class="refcap">' + clean(r0.capability, 60) + '</div>'
+        + '<div class="refdesc">' + clean(r0.detail, 110) + '</div>'
+        + (r0.problem_title ? '<div class="reffor">对应问题：' + clean(r0.problem_title, 30) + '</div>' : '')
+        + '</div></div>';
+    });
+    h += '</div>';
+  }
+  if(Array.isArray(rep.dimensions) && rep.dimensions.length){
+    h += '<div class="rblock"><div class="rsec">分维度得分</div>';
+    rep.dimensions.forEach(d => {
+      const mx = Number(d.max) || 0, sc = Number(d.score) || 0;
+      const pct = mx > 0 ? Math.max(0, Math.min(100, Math.round(sc / mx * 100))) : 0;
+      h += '<div class="dimbar"><div class="dl"><b>' + clean(d.name || d.dimension, 14) + '</b><span>' + (mx > 0 ? (pct + "%" + (d.band ? " · " + clean(d.band, 4) : "")) : "仅画像") + '</span></div>'
+        + (mx > 0 ? '<div class="db"><i style="width:' + pct + '%"></i></div>' : '') + '</div>';
+    });
+    h += '</div>';
+  }
+  if(strengths.length){
+    h += '<div class="rblock"><div class="rsec">可依托的基础</div>';
+    strengths.forEach(s0 => {
+      h += '<div class="pbox sbox"><div class="pt"><span>' + clean(s0.title, 24) + '</span></div>'
+        + ((s0.detail || s0.implication) ? '<p class="pd">' + clean(s0.detail || s0.implication, 64) + '</p>' : '') + '</div>';
+    });
+    h += '</div>';
+  }
+  const remaining = Array.isArray(rep.other_pains) ? rep.other_pains : ((S.brief && S.brief.pains) || []).slice(1);
+  if(remaining.length){
+    h += '<div class="rblock"><div class="rsec">您还提出了这些痛点</div>';
+    remaining.forEach(p => { h += '<div class="pbox"><div class="pt">' + clean(p.area,40) + '</div><p class="pd">' + clean(p.phenomenon,120) + '</p></div>'; });
+    h += '<p class="pd">本次分析第一个痛点。如需分析其他痛点，请联系我们。</p>'
+      + (S.consultedOther ? '<p class="ddok">' + (S.consultedOther === "pending" ? '联系请求已保存，网络恢复后自动提交' : '已收到请求，顾问将与您联系') + '</p>' : '<button class="ddbtn" id="otherPainBtn" onclick="bookConsult(\'other_pains\')">联系我们，分析其他痛点</button>') + '</div>';
+  }
+  h += '<p class="rnote">本报告仅供参考。</p>';
+  h += '</div>';
+  // 销售落点：问卷看不清的关键问题 → 预约爱智顾问深度诊断
+  h += '<div class="rcard ddcard"><div class="rsec">问卷看不清、需要深度诊断的问题</div>';
+  deep.forEach((d, i) => {
+    h += '<div class="dditem"><b>' + (i + 1) + '</b><div><div class="dt">' + clean(d.topic, 30) + '</div>' + (d.why ? '<div class="dw">' + clean(d.why, 64) + '</div>' : '') + '</div></div>';
+  });
+  h += '<p class="ddpitch">这些问题仅靠问卷还看不清真实影响有多大。爱智顾问可结合现场走访与数据抽样，逐项核实。</p>'
+    + (S.consulted === "pending" ? '<div class="ddok">已记录预约，网络恢复后自动送达顾问</div>'
+      : S.consulted ? '<div class="ddok">已收到预约，爱智顾问将尽快与您联系</div>'
+      : '<button class="ddbtn" id="ddBtn" onclick="bookConsult()">预约爱智顾问深度诊断</button>'
+        + '<div class="ddok dim">将使用您登记的联系方式，由顾问一对一联系</div>')
+    + '</div>';
+  if(rep.closing) h += '<p class="closing">' + clean(rep.closing, 64) + '</p>';
+  (el("fullReport") || el("reportBody")).innerHTML = h;
+}
+// 旧报告缺少主痛点章节时自动补齐，不要求用户手动更新。
+async function ensurePrimaryPain(rep){
+  if(assess.painTarget === rep || assess.busy) return;
+  if(!S.questions || !S.questions.length || !S.brief || !(S.brief.pains || []).length) return;
+  const token = APP_TOKEN;
+  assess.painTarget = rep;
+  const isCurrent = () => token === APP_TOKEN && S.report === rep;
+  const apply = result => {
+    const pain = result && result.report && result.report.primary_pain_response;
+    if(!isCurrent() || !pain || !pain.analysis || !(pain.actions || []).length) return;
+    rep.primary_pain_response = pain;
+    if(Array.isArray(result.report.other_pains)) rep.other_pains = result.report.other_pains;
+    saveState();
+    if(S.phase === "report") renderReport(rep);
+  };
+  try{
+    const out = await startJobAndWait("/api/assess", {
+      profile:aiProfile(S.profile), brief:S.brief, questions:S.questions, session_id:S.run || "",
+      answers:S.questions.map(q => ({id:q.id,key:S.answers[q.id]}))
+    }, (progress,job) => { if(job && job.base_result) apply(job.base_result); }, 1500000);
+    if(out && out.ok) apply(out);
+  }catch(e){
+    // 已显示的基础章节继续保留；其余报告始终可读。
+  }finally{
+    if(assess.painTarget === rep) assess.painTarget = null;
+  }
+}
+function downloadDeliverable(){
+  const r = S.report; if(!r) return;
+  const pain = r.primary_pain_response || {};
+  const lines = ['# 企业诊断报告', '', '报告编号：' + (r.report_id || ''), '', r.summary || '', '',
+    '企业类型：' + (r.enterprise_type ? r.enterprise_type.name + '（' + r.enterprise_type.code + '）' : '待补答'),
+    '段位：' + ((r.readiness || {}).level || '待补答'), '', '## 主痛点分析', pain.topic || '', '', pain.analysis || ''];
+  (pain.causes || []).forEach(c => lines.push('', '### 可能原因：' + c.title, c.detail, '作答依据：' + (c.basis_qids || []).join('、')));
+  lines.push('', '## 具体改善建议');
+  (pain.actions || []).forEach((a,i) => lines.push('', '### ' + (i+1) + '．' + a.title, a.action, '建议负责人：' + a.owner, '检查是否改善：' + a.metric));
+  lines.push('', '## AI 可以帮什么', pain.ai_application || '');
+  (r.problems || []).forEach(p => lines.push('', '### ' + p.title, p.detail || ''));
+  if((r.other_pains || []).length){ lines.push('', '## 其他痛点'); r.other_pains.forEach(p => lines.push(p.area + '：' + p.phenomenon)); lines.push('本次分析第一个痛点。如需分析其他痛点，请联系我们。'); }
+  lines.push('', '本报告仅供参考。');
+  const url = URL.createObjectURL(new Blob([lines.join('\n')], {type:'text/markdown;charset=utf-8'}));
+  const a = document.createElement('a'); a.href = url; a.download = '企业诊断报告.md'; a.click(); setTimeout(() => URL.revokeObjectURL(url),1000);
+}
+async function contactDiagnosisSupport(){
+  if(S.supportRequested){ toast("联系请求已记录，顾问将协助继续测评"); return; }
+  const p = S.profile || {};
+  const ok = await postReliable(JSON.stringify({ stage:"consult", intent:"diagnosis_support", vid:getVid(), run:S.run || "", session_id:S.run || "", round:S.round,
+    contact:{name:p.name || "",phone:p.phone || "",company:p.company || ""}, topic:"诊断进度已保存，需要协助继续测评" }), "consult_support");
+  S.supportRequested = true; saveState();
+  toast(ok ? "请求已提交，顾问将协助继续测评" : "联系请求已保存，网络恢复后自动提交");
+}
+async function bookConsult(intent){
+  intent = intent === "other_pains" ? "other_pains" : "deep_diagnosis";
+  const b = el(intent === "other_pains" ? "otherPainBtn" : "ddBtn"); if(b){ b.disabled = true; b.textContent = "提交中…"; }
+  const rep = S.report || {};
+  const payload = JSON.stringify({ stage: "consult", vid: getVid(), ua: navigator.userAgent.slice(0,200),
+    contact: S.profile ? { name: S.profile.name, phone: S.profile.phone, company: S.profile.company, role: S.profile.role || "", sector: S.profile.sector || "", industry: S.profile.industry, scale: S.profile.scale } : {},
+    run: S.run || "", intent: intent, report_id: rep.report_id || "",
+    other_pains: intent === "other_pains" ? (rep.other_pains || ((S.brief && S.brief.pains) || []).slice(1)) : [],
+    topic: intent === "other_pains" ? (rep.other_pains || ((S.brief && S.brief.pains) || []).slice(1)).map(p => p.phenomenon).join("；").slice(0, 260) : (rep.deep_dive || []).map(d => d.topic).join("；").slice(0, 200),
+    level: (rep.readiness || {}).level || "" });
+  const ok = await postReliable(payload, intent === "other_pains" ? "consult_other" : "consult");
+  if(intent === "other_pains") S.consultedOther = ok ? true : "pending";
+  else S.consulted = ok ? true : "pending"; saveState(); renderReport(S.report);
+  toast(ok ? "预约已提交" : "网络有点慢，预约已暂存，会自动补交");
+}
+
+/* ---------- 通关海报（画布绘制 → 图片，微信内可长按保存）；不含公司名与具体问题 ---------- */
+/* 内联二维码编码器（字节模式、纠错 M、版本 1-10，零依赖）。qrMatrix(text) → 布尔二维数组（true=深色）。
+   参照 ISO/IEC 18004 标准流程：数据编码 → RS 纠错分块交织 → 功能图形 → 之字形填充 → 掩码择优 → 格式/版本信息。 */
+function qrMatrix(text){
+  const ECC = [-1, 10, 16, 26, 18, 24, 16, 18, 22, 22, 26];
+  const BLK = [-1, 1, 1, 1, 2, 2, 4, 4, 4, 5, 5];
+  const bytes = Array.from(new TextEncoder().encode(String(text)));
+  const rawModules = v => { let r = (16 * v + 128) * v + 64; if(v >= 2){ const na = Math.floor(v / 7) + 2; r -= (25 * na - 10) * na - 55; if(v >= 7) r -= 36; } return r; };
+  const dataCap = v => Math.floor(rawModules(v) / 8) - ECC[v] * BLK[v];
+  let ver = 1;
+  for(; ver <= 10; ver++){ if(4 + (ver < 10 ? 8 : 16) + bytes.length * 8 <= dataCap(ver) * 8) break; }
+  if(ver > 10) throw new Error("二维码内容过长");
+  // —— 数据比特流 ——
+  const bits = [];
+  const put = (val, len) => { for(let i = len - 1; i >= 0; i--) bits.push((val >>> i) & 1); };
+  put(4, 4); put(bytes.length, ver < 10 ? 8 : 16); bytes.forEach(b => put(b, 8));
+  const capBits = dataCap(ver) * 8;
+  put(0, Math.min(4, capBits - bits.length));
+  put(0, (8 - bits.length % 8) % 8);
+  for(let pad = 0xEC; bits.length < capBits; pad ^= 0xEC ^ 0x11) put(pad, 8);
+  const data = [];
+  for(let i = 0; i < bits.length; i += 8){ let b = 0; for(let j = 0; j < 8; j++) b = (b << 1) | bits[i + j]; data.push(b); }
+  // —— Reed-Solomon ——
+  const mul = (x, y) => { let z = 0; for(let i = 7; i >= 0; i--){ z = (z << 1) ^ ((z >>> 7) * 0x11D); z ^= ((y >>> i) & 1) * x; } return z & 0xFF; };
+  const degree = ECC[ver];
+  const div = new Array(degree).fill(0); div[degree - 1] = 1;
+  let root = 1;
+  for(let i = 0; i < degree; i++){
+    for(let j = 0; j < degree; j++){ div[j] = mul(div[j], root); if(j + 1 < degree) div[j] ^= div[j + 1]; }
+    root = mul(root, 0x02);
+  }
+  const rem = dat => { const r = new Array(degree).fill(0); dat.forEach(b => { const f = b ^ r.shift(); r.push(0); div.forEach((c, i) => { r[i] ^= mul(c, f); }); }); return r; };
+  const nb = BLK[ver], rawCw = Math.floor(rawModules(ver) / 8);
+  const nShort = nb - rawCw % nb, shortLen = Math.floor(rawCw / nb);
+  const blocks = [];
+  for(let i = 0, k = 0; i < nb; i++){
+    const dl = shortLen - degree + (i < nShort ? 0 : 1);
+    const dat = data.slice(k, k + dl); k += dl;
+    const ecc = rem(dat);
+    if(i < nShort) dat.push(0);
+    blocks.push(dat.concat(ecc));
+  }
+  const cw = [];
+  for(let i = 0; i < blocks[0].length; i++) for(let j = 0; j < nb; j++){ if(i !== shortLen - degree || j >= nShort) cw.push(blocks[j][i]); }
+  // —— 功能图形 ——
+  const size = ver * 4 + 17;
+  const mod = [], fn = [];
+  for(let y = 0; y < size; y++){ mod.push(new Array(size).fill(false)); fn.push(new Array(size).fill(false)); }
+  const setF = (x, y, d) => { mod[y][x] = d; fn[y][x] = true; };
+  for(let i = 0; i < size; i++){ setF(6, i, i % 2 === 0); setF(i, 6, i % 2 === 0); }
+  const finder = (cx, cy) => { for(let dy = -4; dy <= 4; dy++) for(let dx = -4; dx <= 4; dx++){ const x = cx + dx, y = cy + dy; if(x < 0 || y < 0 || x >= size || y >= size) continue; const d = Math.max(Math.abs(dx), Math.abs(dy)); setF(x, y, d !== 2 && d !== 4); } };
+  finder(3, 3); finder(size - 4, 3); finder(3, size - 4);
+  if(ver > 1){
+    const na = Math.floor(ver / 7) + 2;
+    const step = Math.ceil((ver * 4 + 4) / (na * 2 - 2)) * 2;
+    const pos = [6];
+    for(let p = size - 7; pos.length < na; p -= step) pos.splice(1, 0, p);
+    for(let i = 0; i < na; i++) for(let j = 0; j < na; j++){
+      if((i === 0 && j === 0) || (i === 0 && j === na - 1) || (i === na - 1 && j === 0)) continue;
+      for(let dy = -2; dy <= 2; dy++) for(let dx = -2; dx <= 2; dx++) setF(pos[i] + dx, pos[j] + dy, Math.max(Math.abs(dx), Math.abs(dy)) !== 1);
+    }
+  }
+  const drawFormat = mask => {
+    const d = (0 << 3) | mask;   // 纠错 M 的格式位为 00
+    let r = d; for(let i = 0; i < 10; i++) r = (r << 1) ^ ((r >>> 9) * 0x537);
+    const b = ((d << 10) | r) ^ 0x5412;
+    const g = i => ((b >>> i) & 1) !== 0;
+    for(let i = 0; i <= 5; i++) setF(8, i, g(i));
+    setF(8, 7, g(6)); setF(8, 8, g(7)); setF(7, 8, g(8));
+    for(let i = 9; i < 15; i++) setF(14 - i, 8, g(i));
+    for(let i = 0; i < 8; i++) setF(size - 1 - i, 8, g(i));
+    for(let i = 8; i < 15; i++) setF(8, size - 15 + i, g(i));
+    setF(8, size - 8, true);
+  };
+  drawFormat(0);
+  if(ver >= 7){
+    let r = ver; for(let i = 0; i < 12; i++) r = (r << 1) ^ ((r >>> 11) * 0x1F25);
+    const b = (ver << 12) | r;
+    for(let i = 0; i < 18; i++){ const d = ((b >>> i) & 1) !== 0; const a = size - 11 + i % 3, c = Math.floor(i / 3); setF(a, c, d); setF(c, a, d); }
+  }
+  // —— 之字形填充 ——
+  let bi = 0;
+  for(let right = size - 1; right >= 1; right -= 2){
+    if(right === 6) right = 5;
+    for(let v = 0; v < size; v++) for(let j = 0; j < 2; j++){
+      const x = right - j, up = ((right + 1) & 2) === 0, y = up ? size - 1 - v : v;
+      if(!fn[y][x] && bi < cw.length * 8){ mod[y][x] = ((cw[bi >>> 3] >>> (7 - (bi & 7))) & 1) !== 0; bi++; }
+    }
+  }
+  // —— 掩码择优（规则 1/2/4 罚分）——
+  const MASK = [
+    (x, y) => (x + y) % 2 === 0, (x, y) => y % 2 === 0, (x, y) => x % 3 === 0, (x, y) => (x + y) % 3 === 0,
+    (x, y) => (Math.floor(x / 3) + Math.floor(y / 2)) % 2 === 0, (x, y) => x * y % 2 + x * y % 3 === 0,
+    (x, y) => (x * y % 2 + x * y % 3) % 2 === 0, (x, y) => ((x + y) % 2 + x * y % 3) % 2 === 0
+  ];
+  const applyMask = m => { for(let y = 0; y < size; y++) for(let x = 0; x < size; x++) if(!fn[y][x] && MASK[m](x, y)) mod[y][x] = !mod[y][x]; };
+  const penalty = () => {
+    let p = 0, dark = 0;
+    for(let a = 0; a < 2; a++) for(let i = 0; i < size; i++){
+      let run = 1;
+      for(let j = 1; j <= size; j++){
+        const cur = j < size ? (a ? mod[j][i] : mod[i][j]) : null, prev = a ? mod[j - 1][i] : mod[i][j - 1];
+        if(cur === prev) run++; else { if(run >= 5) p += run - 2; run = 1; }
+      }
+    }
+    for(let y = 0; y < size - 1; y++) for(let x = 0; x < size - 1; x++){ const c = mod[y][x]; if(c === mod[y][x + 1] && c === mod[y + 1][x] && c === mod[y + 1][x + 1]) p += 3; }
+    for(let y = 0; y < size; y++) for(let x = 0; x < size; x++) if(mod[y][x]) dark++;
+    p += Math.floor(Math.abs(dark * 20 - size * size * 10) / (size * size)) * 10;
+    return p;
+  };
+  let best = 0, bestP = Infinity;
+  for(let m = 0; m < 8; m++){ applyMask(m); drawFormat(m); const pp = penalty(); if(pp < bestP){ bestP = pp; best = m; } applyMask(m); }
+  applyMask(best); drawFormat(best);
+  return mod;
+}
+
+const SERIF = '"Noto Serif SC","Noto Serif CJK SC","Source Han Serif SC","Songti SC","STSong","SimSun",serif';
+const SANS = '"PingFang SC","Noto Sans SC","Noto Sans CJK SC","Microsoft YaHei",sans-serif';
+// 分享码：访客标识的单向散列（与服务端 shareCodeOf 同算法），带在分享链接里，后台据此统计每位分享人带来的人
+function shareCode(){ let h = 0x811c9dc5; const v = String(getVid() || ""); for(let i = 0; i < v.length; i++){ h ^= v.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return "s" + h.toString(36); }
+function shareUrl(from){ return new URL("./?from=" + encodeURIComponent(from) + "&s=" + shareCode(), location.href).href; }
+function stripCompany(text){
+  let t = String(text || "");
+  const c = String((S.profile || {}).company || "").trim();
+  const names = [c, c.replace(/(股份有限公司|有限责任公司|有限公司|集团公司|集团|公司)$/, "")].filter(x => x && x.length >= 2).sort((a, b) => b.length - a.length);
+  names.forEach(n => { t = t.split(n).join("这家企业"); });
+  return t;
+}
+function rr(ctx, x, y, w, h, r){ ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath(); }
+function drawSeal(ctx, cx, cy, s, lines, rot, sizes){
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(rot * Math.PI / 180);
+  ctx.fillStyle = "#C0302A"; rr(ctx, -s / 2, -s / 2, s, s, s * 0.07); ctx.fill();
+  ctx.strokeStyle = "rgba(255,238,232,.85)"; ctx.lineWidth = Math.max(2, s * 0.025);
+  const m = s * 0.075; rr(ctx, -s / 2 + m, -s / 2 + m, s - 2 * m, s - 2 * m, s * 0.04); ctx.stroke();
+  ctx.fillStyle = "#FFF3EE"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+  const gap = lines.length > 1 ? s * 0.12 : 0;
+  let total = 0; sizes.forEach(z => { total += z; }); total += gap * (lines.length - 1);
+  let y = -total / 2;
+  lines.forEach((ln, i) => { ctx.font = "800 " + sizes[i] + "px " + SERIF; ctx.fillText(ln, 0, y + sizes[i] / 2 + 1); y += sizes[i] + gap; });
+  ctx.restore();
+}
+function spaced(ctx, text, cx, y, sp){
+  const chars = [...text]; let w = 0; chars.forEach(ch => { w += ctx.measureText(ch).width; }); w += sp * (chars.length - 1);
+  let x = cx - w / 2; ctx.textAlign = "left";
+  chars.forEach(ch => { ctx.fillText(ch, x, y); x += ctx.measureText(ch).width + sp; });
+  ctx.textAlign = "center";
+}
+function wrapLines(ctx, text, maxW, maxLines){
+  const chars = [...String(text || "")]; const lines = []; let cur = "";
+  for(let i = 0; i < chars.length; i++){
+    const t = cur + chars[i];
+    // 避头：标点不放到行首，挤进上一行
+    if(ctx.measureText(t).width > maxW && cur && !/[，。、；：！？）」』%…]/.test(chars[i])){
+      lines.push(cur); cur = chars[i];
+      if(lines.length === maxLines){ let l = lines[maxLines - 1]; while(l && ctx.measureText(l + "…").width > maxW) l = l.slice(0, -1); lines[maxLines - 1] = l + "…"; return lines; }
+    } else cur = t;
+  }
+  if(cur) lines.push(cur);
+  // 防孤字：末行只剩三个字以内（如「工具。」）时，从上一行挪几个字下来，两行看起来更匀
+  if(lines.length >= 2){
+    let a = [...lines[lines.length - 2]], b = [...lines[lines.length - 1]];
+    while(b.length <= 3 && a.length > 4){
+      const ch = a.pop(); b.unshift(ch);
+      while(a.length > 4 && /[，。、；：！？）」』%…]/.test(b[0])){ b.unshift(a.pop()); }
+      if(b.length > 3) break;
+    }
+    lines[lines.length - 2] = a.join(""); lines[lines.length - 1] = b.join("");
+  }
+  return lines;
+}
+async function drawPoster(){
+  try{ if(document.fonts && document.fonts.ready) await document.fonts.ready; }catch(e){}
+  const W = 750, H = 1334;
+  const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+  const ctx = cv.getContext("2d");
+  const rd = rankRd();
+  const t = S.quickType || S.typePre || null;
+  ctx.fillStyle = "#D9E1DB"; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = "#F7F8F4"; ctx.fillRect(40, 40, W - 80, H - 80);
+  ctx.strokeStyle = "#1C2A2D"; ctx.lineWidth = 3; ctx.strokeRect(40, 40, W - 80, H - 80);
+  ctx.strokeStyle = "rgba(28,42,45,.32)"; ctx.lineWidth = 1.5; ctx.strokeRect(54, 54, W - 108, H - 108);
+  ctx.textAlign = "center"; ctx.textBaseline = "alphabetic";
+  ctx.fillStyle = "#46575A"; ctx.font = "500 26px " + SANS; ctx.fillText("爱智企业AI检测", W / 2, 122);
+  ctx.fillStyle = "#1C2A2D"; ctx.font = "800 66px " + SERIF; spaced(ctx, "诊断报告", W / 2, 202, 22);
+  const nSt = stageCount(), rots = [-5, 4, -8, 3, -3], sx = 92, gap = nSt > 1 ? (W - 2 * 100 - nSt * sx) / (nSt - 1) : 0, sx0 = nSt > 1 ? 100 : W / 2 - sx / 2;
+  STAGES.slice(0, nSt).forEach((s, i) => drawSeal(ctx, sx0 + sx / 2 + i * (sx + gap), 292, sx, [s.n], rots[i], [30]));
+  ctx.strokeStyle = "#A3B1AC"; ctx.lineWidth = 2; ctx.setLineDash([8, 7]);
+  ctx.beginPath(); ctx.moveTo(90, 372); ctx.lineTo(W - 90, 372); ctx.stroke(); ctx.setLineDash([]);
+  const li = levelIndex(rd.level);
+  drawSeal(ctx, W / 2, 520, 230, [String(rd.level || "—"), String(rd.name || (li >= 0 ? LEVELS[li][1] : "待定"))], -4, [92, 34]);
+  ctx.fillStyle = "#46575A"; ctx.font = "500 26px " + SANS;
+  ctx.fillText(li >= 0 ? ("AI 段位：第 " + (li + 1) + " 段，共 5 段") : "AI 段位", W / 2, 690);
+  let y = 740;
+  if(t && t.code){
+    const letters = [...String(t.code)].slice(0, 4), bw = 76, bh = 88, bg = 18;
+    const x0 = W / 2 - (letters.length * bw + (letters.length - 1) * bg) / 2;
+    letters.forEach((ch, i) => {
+      const x = x0 + i * (bw + bg);
+      ctx.strokeStyle = "#1C2A2D"; ctx.lineWidth = 3; rr(ctx, x, y, bw, bh, 8); ctx.stroke();
+      ctx.fillStyle = "#1C2A2D"; ctx.font = "800 50px " + SERIF; ctx.textBaseline = "middle"; ctx.fillText(ch, x + bw / 2, y + bh / 2 + 2); ctx.textBaseline = "alphabetic";
+    });
+    y += bh + 66;
+    ctx.fillStyle = "#1C2A2D"; ctx.font = "800 42px " + SERIF; ctx.fillText(String(t.name || ""), W / 2, y);
+    y += 54;
+    if(t.one_liner){
+      ctx.fillStyle = "#46575A"; ctx.font = "400 26px " + SANS;
+      wrapLines(ctx, stripCompany(t.one_liner), W - 220, 2).forEach(ln => { ctx.fillText(ln, W / 2, y); y += 40; });
+    }
+  }
+  if(S.peer && typeof S.peer.beat === "number"){
+    ctx.fillStyle = "#C0302A"; ctx.font = "700 30px " + SERIF;
+    ctx.fillText("超过 " + S.peer.beat + "% 已检测的" + (S.peer.scope === "industry" && S.peer.industry ? S.peer.industry : "") + "企业", W / 2, Math.max(y + 14, 1030));
+  }
+  ctx.strokeStyle = "#A3B1AC"; ctx.lineWidth = 2; ctx.setLineDash([8, 7]);
+  ctx.beginPath(); ctx.moveTo(90, 1076); ctx.lineTo(W - 90, 1076); ctx.stroke(); ctx.setLineDash([]);
+  // 二维码：白底 + 2 格静区
+  const mtx = qrMatrix(shareUrl("poster")), n = mtx.length, cell = Math.max(3, Math.floor(168 / (n + 4))), qs = cell * (n + 4), qx = 96, qy = 1104;
+  ctx.fillStyle = "#FFFFFF"; ctx.fillRect(qx, qy, qs, qs);
+  ctx.fillStyle = "#1C2A2D";
+  for(let r = 0; r < n; r++) for(let c = 0; c < n; c++) if(mtx[r][c]) ctx.fillRect(qx + (c + 2) * cell, qy + (r + 2) * cell, cell, cell);
+  const tx = qx + qs + 34; ctx.textAlign = "left";
+  ctx.fillStyle = "#1C2A2D"; ctx.font = "800 34px " + SERIF; ctx.fillText("扫码，测测你的企业", tx, qy + 58); ctx.fillText("AI 段位", tx, qy + 104);
+  ctx.fillStyle = "#7A8A89"; ctx.font = "400 22px " + SANS; ctx.fillText("五关三十题，答完即得段位与诊断书", tx, qy + 148);
+  return cv.toDataURL("image/png");
+}
+async function makePoster(){
+  if(!rankRd().level){ toast("段位评定后才能生成海报"); return; }
+  if(assess.quickBusy && !S.quickType && !S.typePre){ toast("企业类型还在判定，稍等几秒再生成"); return; }
+  const b = el("posterBtn"); if(b){ b.disabled = true; b.textContent = "生成中…"; }
+  try{
+    const url = await drawPoster();
+    el("posterImg").src = url;
+    el("posterSave").href = url;
+    el("posterBox").classList.add("on");
+    track("share", { kind: "poster", level: rankRd().level || "", code: (S.quickType || S.typePre || {}).code || "" });
+  }catch(e){ toast("海报生成失败，请稍后重试"); }
+  if(b){ b.disabled = false; b.textContent = "生成测评海报"; }
+}
+function closePoster(){ el("posterBox").classList.remove("on"); }
+async function invitePeer(){
+  const rd = rankRd();
+  const url = shareUrl("invite");
+  const text = "我刚做完爱智企业AI诊断" + (rd.level ? "，AI 段位 " + rd.level + " " + (rd.name || "") : "") + "。给你的企业也做一次？五关三十题，答完即得段位和 AI 问题诊断书。";
+  track("share", { kind: "invite", level: rd.level || "" });
+  if(navigator.share){
+    try{ await navigator.share({ title: document.title, text: text, url: url }); return; }
+    catch(e){ if(e && e.name === "AbortError") return; }
+  }
+  const all = text + " " + url;
+  let ok = false;
+  try{ if(navigator.clipboard && window.isSecureContext){ await navigator.clipboard.writeText(all); ok = true; } }catch(e){}
+  if(!ok){
+    try{ const ta = document.createElement("textarea"); ta.value = all; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0"; document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove(); }catch(e){}
+  }
+  toast(ok ? "邀请文案和链接已复制，发给同行即可" : "复制失败，请直接分享本页链接");
+}
+
+/* ---------- 重做 ---------- */
+function askRestart(){
+  askConfirm({ title: "重新检测？", text: "将清空本机记录并从第一关开始（联系方式会被记住，免重填）。", cancel: "取消", ok: "清空重来", danger: true, onOk: () => restart() });
+}
+function restart(){
+  resetForNew();
+  hide("report"); hide("quiz"); hide("brief"); hide("profile");
+  el("welcome").style.display = "block"; el("welcome").classList.add("screen");
+  el("resumeRow").style.display = "none";
+  paintWelcome([]);
+  window.scrollTo(0, 0);
+}
+
+/* ---------- 初始化 ---------- */
+(function init(){
+  el("qTotal").textContent = CFG.target;
+  const sp = el("spTotal"); if(sp) sp.textContent = CFG.target;
+  el("railCount").textContent = "0/" + CFG.target;
+  flushOutbox();
+  window.addEventListener("online", flushOutbox);
+  setInterval(flushOutbox, 30000);
+  try{
+    const st = loadState();
+    if(st && st.phase && st.phase !== "welcome"){
+      const n = Object.keys(st.answers || {}).length;
+      if(n || ["quiz", "report", "brief", "profile"].indexOf(st.phase) >= 0){
+        el("resumeTxt").textContent = st.phase === "report" ? "上次的检测已完成" : n ? ("上次已答 " + n + " 题") : "上次的检测还没做完";
+        el("resumeRow").style.display = "block";
+        paintWelcome(Array.isArray(st.cleared) ? st.cleared : []);
+      }
+    }
+  }catch(e){}
+  document.addEventListener("keydown", e => { if(e.key === "Escape"){ if(el("posterBox").classList.contains("on")) closePoster(); else if(stageClearOpen()) continueAfterClear(); } });
+  // 已完成检测的企业数：只用服务端真实记录，样本不足 30 家时不显示
+  fetchWithTimeout("/api/peer", {}, 8000).then(r => r.json()).then(j => {
+    if(j && j.ok && typeof j.total === "number" && j.total >= (j.min || 30)){ const n = el("welcomePeer"); n.innerHTML = "已有 <b>" + j.total + "</b> 家企业完成检测"; n.style.display = "block"; }
+  }).catch(() => {});
+  let from = "", sharer = "";
+  try{ const sp = new URLSearchParams(location.search); from = (sp.get("from") || "").slice(0, 20); sharer = (sp.get("s") || "").slice(0, 14); }catch(e){}
+  if(sharer && (!/^s[0-9a-z]{2,12}$/.test(sharer) || sharer === shareCode())) sharer = "";   // 自己扫自己的码不算
+  const ve = {}; if(from) ve.from = from; if(sharer) ve.sharer = sharer;
+  track("visit", ve);
+})();
+
+</script>
+</body>
+</html>
